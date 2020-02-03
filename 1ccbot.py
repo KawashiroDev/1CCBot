@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.0.1'
+bot_version = '1.1'
 
 #owner id
 owner_id = '166189271244472320'
@@ -13,10 +13,13 @@ owner_id = '166189271244472320'
 debugmode = True
 
 #Spicetools URL
-spiceurl = "http://onlyone.cab/downloads/spicetools-latest.zip"
+spiceURL = "http://onlyone.cab/downloads/spicetools-latest.zip"
 
 #Bemanitools URL
 btoolURL = "http://tools.bemaniso.ws/bemanitools-v5.28.zip"
+
+#segatools URL
+stoolURL = "http://example.com"
 
 import discord
 import requests
@@ -45,6 +48,9 @@ bot.remove_command("help")
 
 
 st = time.time()
+
+user_blacklist = open("txt/badactors.txt", "r")
+badactors = user_blacklist.read()
 
 #if __name__ == '__main__':
 #    for extension in initial_extensions:
@@ -87,20 +93,37 @@ async def on_message(message):
     if message.author == bot.user:
         return
     if message.author.bot:
-        return	
+        return
+    
+    if str(message.author.id) in badactors and "hdd" in contents.lower():
+        print("user triggered HDD check but id is whitelisted")
+        #await message.channel.send('id ignored')
+        return
     
 #game hdd checks
-    if "iidx hdd" in contents:  
-        await message.channel.send(hddtext)
+    if "iidx hdd" in contents.lower():  
+        await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
         return
 
-    if "sdvx hdd" in contents: 
-        await message.channel.send(hddtext)
+    if "sdvx hdd" in contents.lower(): 
+        await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
         return
 
-    if "ddr hdd" in contents:   
-        await message.channel.send(hddtext)
-        return	
+    if "ddr hdd" in contents.lower():   
+        await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
+        return
+
+    if "popn hdd" in contents.lower():   
+        await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
+        return
+
+    if "jubeat hdd" in contents.lower():   
+        await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
+        return
+
+#    if "generic hdd" in contents.lower():   
+#        await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
+#        return
     
     await bot.process_commands(message)
 
@@ -144,12 +167,14 @@ async def blech(ctx):
 #loader/server info commands
 
 @bot.command()
+@is_owner()
 async def gameloader(ctx):
     hlp = open("txt/gameloader_info.txt", "r")
     help_cmd = hlp.read()
     await ctx.send(help_cmd)
 
 @bot.command()
+@is_owner()
 async def teknoparrot(ctx):
     hlp = open("txt/tp_info.txt", "r")
     help_cmd = hlp.read()
@@ -162,20 +187,42 @@ async def spicetools(ctx):
 
     #CN
     if str(ctx.channel) == '中文':
-        await ctx.send('CN_spicestring')
+        #await ctx.send('您可以从下载 ' + spiceURL)
+        await ctx.send('您可以从 ' + spiceURL + ' 下载')
+        return
     #JP
     if str(ctx.channel) == '日本語':
-        await ctx.send('JP_spicestring')
+        await ctx.send(spiceURL + ' からダウンロードできます')
+        return
     #KR
     if str(ctx.channel) == '한국어':
-        await ctx.send('KR_spicestring')
+        await ctx.send(spiceURL +' 에서 얻을 수 있습니다')
+        return
     else:
         await ctx.send('Spicetools can be downloaded from ' + spiceURL)
+        return
 
 @bot.command()
 async def bemanitools(ctx):
-    await ctx.send('Bemanitools can be downloaded from http://tools.bemaniso.ws/bemanitools-v5.28.zip')
-    await ctx.send('(if this is out of date replace 5.28 with the correct number e.g 5.29)')     
+    #foreign channel checks
+    #id's aren't hardcoded as the channels may be deleted and remade which would break an id check
+
+    #CN
+    if str(ctx.channel) == '中文':
+        #await ctx.send('您可以从下载 ' + spiceURL)
+        await ctx.send('您可以从 ' + btoolURL + ' 下载')
+        return
+    #JP
+    if str(ctx.channel) == '日本語':
+        await ctx.send(btoolURL + ' からダウンロードできます')
+        return
+    #KR
+    if str(ctx.channel) == '한국어':
+        await ctx.send(btoolURL +' 에서 얻을 수 있습니다')
+        return
+    else:
+        await ctx.send('Bemanitools can be downloaded from ' + btoolURL)
+        return     
 
 @bot.command()
 async def xrpcv(ctx):
