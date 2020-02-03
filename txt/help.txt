@@ -1,0 +1,8 @@
+1CCBot v1.0 - Commandlist
+
+Blech - send a <:cirBlech:415143187762511872>
+About - Bot information
+Help - View this
+
+Jconfig - Download latest jconfig
+Spicetools - Download latest spicetools

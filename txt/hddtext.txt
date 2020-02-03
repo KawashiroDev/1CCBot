@@ -1,0 +1,1 @@
+Hi there, just letting you know that a `game hdd` refers to a full drive image of a game and what you most likely have is refered to as a `game dump`
