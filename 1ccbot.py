@@ -10,7 +10,7 @@ bot_version = '1.1'
 owner_id = '166189271244472320'
 
 #debug switch
-debugmode = True
+debugmode = False
 
 #Spicetools URL
 spiceURL = "http://onlyone.cab/downloads/spicetools-latest.zip"
