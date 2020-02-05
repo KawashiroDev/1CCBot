@@ -181,6 +181,7 @@ async def teknoparrot(ctx):
     await ctx.send(help_cmd)
 
 @bot.command()
+@commands.cooldown(1, 90, commands.BucketType.default)
 async def spicetools(ctx):
     #foreign channel checks
     #id's aren't hardcoded as the channels may be deleted and remade which would break an id check
@@ -188,7 +189,12 @@ async def spicetools(ctx):
     #CN
     if str(ctx.channel) == '中文':
         #await ctx.send('您可以从下载 ' + spiceURL)
-        await ctx.send('您可以从 ' + spiceURL + ' 下载')
+        #await ctx.send('您可以从 ' + spiceURL + ' 下载')
+        await ctx.send('请稍等片刻...')
+        r = requests.get(spiceURL)
+        with open('Spicetools.zip', 'wb') as f:
+            f.write(r.content)
+        await ctx.send(file=discord.File('Spicetools.zip'))
         return
     #JP
     if str(ctx.channel) == '日本語':
