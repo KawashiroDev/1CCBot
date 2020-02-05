@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.1'
+bot_version = '1.1 R1'
 
 #owner id
 owner_id = '166189271244472320'
@@ -196,7 +196,12 @@ async def spicetools(ctx):
         return
     #KR
     if str(ctx.channel) == '한국어':
-        await ctx.send(spiceURL +' 에서 얻을 수 있습니다')
+#        await ctx.send(spiceURL +' 에서 얻을 수 있습니다')
+        await ctx.send('기다려주세요 ...')
+        r = requests.get(spiceURL)
+        with open('Spicetools.zip', 'wb') as f:
+            f.write(r.content)
+        await ctx.send(file=discord.File('Spicetools.zip'))
         return
     else:
         await ctx.send('Spicetools can be downloaded from ' + spiceURL)
@@ -279,8 +284,8 @@ async def about(ctx):
     day, hour = divmod(hour, 24)
     week, day = divmod(day, 7)
 
-    em = discord.Embed(title='Currently on ' + str(len(bot.guilds)) + ' servers', description='Uptime= %d weeks,' % (week) + ' %d days,' % (day) + ' %d hours,' % (hour) + ' %d minutes,' % (minute) + ' and %d seconds.' % (second) + '\n Created by Rumia', colour=0x00ffff)
-    em.set_author(name='1CCBot ' + bot_version , icon_url=bot.user.avatar_url)
+    em = discord.Embed(title='Currently on ' + str(len(bot.guilds)) + ' servers', description='Uptime= %d weeks,' % (week) + ' %d days,' % (day) + ' %d hours,' % (hour) + ' %d minutes,' % (minute) + ' and %d seconds.' % (second) + '\n Created by 99710', colour=0x00ffff)
+    em.set_author(name='1CCBot V' + bot_version , icon_url=bot.user.avatar_url)
     await ctx.send(embed=em)
 
 @bot.command()
