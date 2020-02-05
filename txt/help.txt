@@ -1,4 +1,4 @@
-1CCBot v1.0 - Commandlist
+1CCBot - Commandlist
 
 Blech - send a <:cirBlech:415143187762511872>
 About - Bot information
@@ -6,3 +6,4 @@ Help - View this
 
 Jconfig - Download latest jconfig
 Spicetools - Download latest spicetools
+Bemanitools - Download latest bemanitools
