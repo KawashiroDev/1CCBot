@@ -198,7 +198,12 @@ async def spicetools(ctx):
         return
     #JP
     if str(ctx.channel) == '日本語':
-        await ctx.send(spiceURL + ' からダウンロードできます')
+        #await ctx.send(spiceURL + ' からダウンロードできます')
+        await ctx.send('お待ちください...')
+        r = requests.get(spiceURL)
+        with open('Spicetools.zip', 'wb') as f:
+            f.write(r.content)
+        await ctx.send(file=discord.File('Spicetools.zip'))
         return
     #KR
     if str(ctx.channel) == '한국어':
