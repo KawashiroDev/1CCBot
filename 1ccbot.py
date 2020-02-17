@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.1 R1'
+bot_version = '1.1 R2'
 
 #owner id
 owner_id = '166189271244472320'
@@ -155,9 +155,9 @@ async def help(ctx):
 #misc commands
     
 @bot.command()
-@is_owner()
 async def kickme(ctx):
-    await ctx.send('Say no more')
+    await ctx.send('You will be kicked in 10 seconds')
+    await asyncio.sleep(10)
     await ctx.author.kick(reason='asked for it')
 
 @bot.command()
@@ -175,10 +175,16 @@ async def gameloader(ctx):
 
 @bot.command()
 @is_owner()
-async def teknoparrot(ctx):
+async def teknoparrot2(ctx):
     hlp = open("txt/tp_info.txt", "r")
     help_cmd = hlp.read()
     await ctx.send(help_cmd)
+
+@bot.command()
+@is_owner()
+async def teknoparrot(ctx):
+    await ctx.send('Teknoparrot can be downloaded from https://teknoparrot.com/')
+    await ctx.send('(Check <#434222178922135553> to see if your game is supported by jconfig first)')
 
 @bot.command()
 @commands.cooldown(1, 90, commands.BucketType.default)
