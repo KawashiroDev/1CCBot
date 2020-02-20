@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.1 R2'
+bot_version = '1.2'
 
 #owner id
 ownerid = 166189271244472320
@@ -37,6 +37,23 @@ Roles = [
 "green",     
 "light green",    
 "dark green",
+"purple",
+"magenta",
+"pensi blue",
+"pink",
+"cyan",
+"gold",
+"yellow",
+"orange",
+"red",
+]
+
+Roles_special = [
+"pale green",     
+"sky blue",    
+"neon pink",
+"peach",
+"silver",
 ]
 
 print('Please wait warmly...')
@@ -101,6 +118,17 @@ async def on_message(message):
         return
     if message.author.bot:
         return
+
+#role giving thingy, Removes the new guy role from a new user and assigns them a new role at random when they send a message
+    role = discord.utils.get(message.guild.roles, name="new guy")
+    if role in message.author.roles:
+        #print('[debug] User has new guy role, giving a role')
+        user=message.author
+        newrole=discord.utils.get(message.guild.roles, name=secure_random.choice(Roles))
+        oldrole=discord.utils.get(message.guild.roles, name='new guy')
+        await user.remove_roles(oldrole, reason='User introduced themself')
+        await user.add_roles(newrole, reason='User introduced themself')
+        
     
     if str(message.author.id) in badactors and "hdd" in contents.lower():
         print("user triggered HDD check but id is whitelisted")
@@ -176,8 +204,10 @@ async def blech(ctx):
 async def getrole(ctx):
     print ('[Debug] Giving user role')
     user=ctx.message.author
-    role=discord.utils.get(ctx.guild.roles, name=secure_random.choice(Roles))
-    await user.add_roles(role, reason='User introduced themselves')
+    newrole=discord.utils.get(ctx.guild.roles, name=secure_random.choice(Roles))
+    oldrole=discord.utils.get(ctx.guild.roles, name='Test')
+    await user.remove_roles(oldrole, reason='getrole')
+    await user.add_roles(newrole, reason='getrole')
 
 #loader/server info commands
 
