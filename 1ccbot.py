@@ -7,7 +7,7 @@
 bot_version = '1.1 R2'
 
 #owner id
-owner_id = '166189271244472320'
+ownerid = 166189271244472320
 
 #debug switch
 debugmode = False
@@ -33,6 +33,12 @@ import time
 from discord.ext import commands
 from random import randint
 
+Roles = [
+"green",     
+"light green",    
+"dark green",
+]
+
 print('Please wait warmly...')
 
 #initial_extensions = ['Modules.image', 'Modules.booru']
@@ -48,6 +54,7 @@ bot.remove_command("help")
 
 
 st = time.time()
+secure_random = random.SystemRandom()
 
 user_blacklist = open("txt/badactors.txt", "r")
 badactors = user_blacklist.read()
@@ -163,6 +170,14 @@ async def kickme(ctx):
 @bot.command()
 async def blech(ctx):
     await ctx.send('<:cirblech:415143187762511872>')
+
+@bot.command()
+@is_owner()
+async def getrole(ctx):
+    print ('[Debug] Giving user role')
+    user=ctx.message.author
+    role=discord.utils.get(ctx.guild.roles, name=secure_random.choice(Roles))
+    await user.add_roles(role, reason='User introduced themselves')
 
 #loader/server info commands
 
