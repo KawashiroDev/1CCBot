@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.2'
+bot_version = '1.2 R1'
 
 #owner id
 ownerid = 166189271244472320
@@ -125,9 +125,22 @@ async def on_message(message):
         #print('[debug] User has new guy role, giving a role')
         user=message.author
         newrole=discord.utils.get(message.guild.roles, name=secure_random.choice(Roles))
-        oldrole=discord.utils.get(message.guild.roles, name='new guy')
-        await user.remove_roles(oldrole, reason='User introduced themself')
-        await user.add_roles(newrole, reason='User introduced themself')
+        
+        if str(newrole) == "None":
+            #print('[Debug] Random Broke, going to plan B')
+            newrole2=discord.utils.get(message.guild.roles, name="pensi blue")
+            oldrole=discord.utils.get(message.guild.roles, name='new guy')
+            await user.remove_roles(oldrole, reason='User introduced themself')
+            await user.add_roles(newrole2, reason='User introduced themself')
+            return
+
+        else:
+            
+            oldrole=discord.utils.get(message.guild.roles, name='new guy')
+            await user.remove_roles(oldrole, reason='User introduced themself')
+            #print('[Debug] Giving user ' + str(newrole))
+            await user.add_roles(newrole, reason='User introduced themself')
+            return
         
     
     if str(message.author.id) in badactors and "hdd" in contents.lower():
