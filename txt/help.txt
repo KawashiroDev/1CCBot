@@ -4,6 +4,8 @@ Blech - send a <:cirBlech:415143187762511872>
 About - Bot information
 Help - View this
 
-Jconfig - Download latest jconfig
-Spicetools - Download latest spicetools
-Bemanitools - Download latest bemanitools
+Jconfig - Download latest Jconfig
+Spicetools - Download latest Spicetools
+Bemanitools - Download latest Bemanitools
+Teknoparrot - Download latest Teknoparrot
+xrpcv - Download xrpcv from HT (likely outdated)
