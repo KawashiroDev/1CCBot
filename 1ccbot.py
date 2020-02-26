@@ -203,10 +203,18 @@ async def help(ctx):
 #misc commands
     
 @bot.command()
+@commands.cooldown(1, 99999, commands.BucketType.default)
 async def kickme(ctx):
-    await ctx.send('You will be kicked in 10 seconds')
-    await asyncio.sleep(10)
-    await ctx.author.kick(reason='asked for it')
+    role = discord.utils.get(ctx.guild.roles, name="Moderator")
+    if role in ctx.author.roles:
+        await ctx.send('No')
+        return
+
+    else:
+        await ctx.send('You will be kicked in 10 seconds')
+        await ctx.author.send('https://discord.gg/UypwQ3R')
+        await asyncio.sleep(10)
+        await ctx.author.kick(reason='asked for it')
 
 @bot.command()
 async def blech(ctx):
