@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.2 R1'
+bot_version = '1.3'
 
 #owner id
 ownerid = 166189271244472320
@@ -367,8 +367,16 @@ async def about(ctx):
     day, hour = divmod(hour, 24)
     week, day = divmod(day, 7)
 
-    em = discord.Embed(title='Currently on ' + str(len(bot.guilds)) + ' servers', description='Uptime= %d weeks,' % (week) + ' %d days,' % (day) + ' %d hours,' % (hour) + ' %d minutes,' % (minute) + ' and %d seconds.' % (second) + '\n Created by 99710', colour=0x00ffff)
-    em.set_author(name='1CCBot V' + bot_version , icon_url=bot.user.avatar_url)
+    uptime='%dw,' % (week) + ' %dd,' % (day) + ' %dh,' % (hour) + ' %dm,' % (minute) + ' and %ds.' % (second)
+    servercount=str(len(bot.guilds))
+    buildinfo="%s" % time.ctime(os.path.getmtime("1ccbot.py"))
+
+    em=discord.Embed(colour=0xff0000)
+    em.set_author(name= bot.user.name + ' info', icon_url=bot.user.avatar_url)
+    em.add_field(name="Version", value=bot_version, inline=False)
+    em.add_field(name="Uptime", value=uptime, inline=False)
+    em.add_field(name="1ccbot.py timestamp", value=buildinfo, inline=False)
+    em.set_footer(text="Created by 99710")
     await ctx.send(embed=em)
 
 @bot.command()
