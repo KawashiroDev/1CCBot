@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.3'
+bot_version = '1.3A'
 
 #owner id
 ownerid = 166189271244472320
@@ -21,6 +21,9 @@ btoolURL = "http://tools.bemaniso.ws/bemanitools-v5.29.zip"
 #segatools URL
 stoolURL = "http://example.com"
 
+#April fools mode
+aprilfools=True
+
 import discord
 import requests
 import aiohttp
@@ -32,6 +35,7 @@ import time
 
 from discord.ext import commands
 from random import randint
+from datetime import datetime, timedelta, date
 
 Roles = [
 "green",     
@@ -266,8 +270,17 @@ async def spicetools(ctx):
         r = requests.get(spiceURL)
         with open('Spicetools.zip', 'wb') as f:
             f.write(r.content)
-        await ctx.send(file=discord.File('Spicetools.zip'))
-        return
+            
+        if aprilfools==True:
+            await ctx.send('*玩更好的游戏*')
+            await asyncio.sleep(2)
+            await ctx.author.send('开玩笑...')
+            await ctx.author.send(file=discord.File('Spicetools.zip'))
+            return
+
+        else:
+            await ctx.send(file=discord.File('Spicetools.zip'))
+            return
     #JP
     if str(ctx.channel) == '日本語':
         #await ctx.send(spiceURL + ' からダウンロードできます')
@@ -275,8 +288,18 @@ async def spicetools(ctx):
         r = requests.get(spiceURL)
         with open('Spicetools.zip', 'wb') as f:
             f.write(r.content)
-        await ctx.send(file=discord.File('Spicetools.zip'))
-        return
+
+        if aprilfools==True:
+            await ctx.send('*より良いゲームをプレイする*')
+            await asyncio.sleep(2)
+            await ctx.author.send('冗談だ')
+            await ctx.author.send(file=discord.File('Spicetools.zip'))
+            return
+
+        else:
+            await ctx.send(file=discord.File('Spicetools.zip'))
+            return
+
     #KR
     if str(ctx.channel) == '한국어':
 #        await ctx.send(spiceURL +' 에서 얻을 수 있습니다')
@@ -284,11 +307,27 @@ async def spicetools(ctx):
         r = requests.get(spiceURL)
         with open('Spicetools.zip', 'wb') as f:
             f.write(r.content)
-        await ctx.send(file=discord.File('Spicetools.zip'))
-        return
+            
+        if aprilfools==True:
+            await ctx.send('*접근 불가*')
+            await asyncio.sleep(2)
+            await ctx.author.send('만우절')
+            await ctx.author.send(file=discord.File('Spicetools.zip'))
+            return
+
+        else:
+            await ctx.send(file=discord.File('Spicetools.zip'))
+            return
+
     else:
-        await ctx.send('Spicetools can be downloaded from ' + spiceURL)
-        return
+        if aprilfools==True:
+            await ctx.send('<@' + str(ctx.author.id) + '>' + ' Play better games')
+            await asyncio.sleep(3)
+            await ctx.author.send('April fools!. Spicetools can be downloaded from ' + spiceURL)
+            return
+        else:
+            await ctx.send('Spicetools can be downloaded from ' + spiceURL)
+            return
 
 @bot.command()
 async def bemanitools(ctx):
@@ -407,3 +446,4 @@ tkn = open("Tokens/tenshi_production.txt", "r")
 token = tkn.read()
 tkn.close()    
 bot.run(token, bot=True, reconnect=True)
+
