@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.3A'
+bot_version = '1.3'
 
 #owner id
 ownerid = 166189271244472320
@@ -22,7 +22,7 @@ btoolURL = "http://tools.bemaniso.ws/bemanitools-v5.29.zip"
 stoolURL = "http://example.com"
 
 #April fools mode
-aprilfools=True
+aprilfools=False
 
 import discord
 import requests
