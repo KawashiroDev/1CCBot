@@ -16,7 +16,7 @@ debugmode = False
 spiceURL = "http://onlyone.cab/downloads/spicetools-latest.zip"
 
 #Bemanitools URL
-btoolURL = "http://tools.bemaniso.ws/bemanitools-v5.29.zip"
+btoolURL = "http://tools.bemaniso.ws/bemanitools-v5.30.zip"
 
 #segatools URL
 stoolURL = "http://example.com"
