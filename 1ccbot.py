@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.3'
+bot_version = '1.3 S1'
 
 #owner id
 ownerid = 166189271244472320
@@ -20,6 +20,9 @@ btoolURL = "http://tools.bemaniso.ws/bemanitools-v5.29.zip"
 
 #segatools URL
 stoolURL = "http://example.com"
+
+#asphyxia URL
+asphURL = "http://example.com"
 
 #April fools mode
 aprilfools=False
@@ -79,6 +82,9 @@ secure_random = random.SystemRandom()
 
 user_blacklist = open("txt/badactors.txt", "r")
 badactors = user_blacklist.read()
+
+user_blacklist_main = open("txt/badactors_m.txt", "r")
+badactors_m = user_blacklist_main.read()
 
 #if __name__ == '__main__':
 #    for extension in initial_extensions:
@@ -150,6 +156,9 @@ async def on_message(message):
     if str(message.author.id) in badactors and "hdd" in contents.lower():
         print("user triggered HDD check but id is whitelisted")
         #await message.channel.send('id ignored')
+        return
+
+    if str(message.author.id) in badactors_m:
         return
     
 #game hdd checks
@@ -354,7 +363,7 @@ async def bemanitools(ctx):
 @bot.command()
 async def xrpcv(ctx):
     await ctx.send('Xrpcv can be downloaded from http://193.70.38.209/file/xrpcv_2202.7z')
-    await ctx.send('Alternatively pen and paper can be used to write down scores')
+    await ctx.send('Consider using asphyxia instead')
 
 @bot.command()
 async def jconfig(ctx):
