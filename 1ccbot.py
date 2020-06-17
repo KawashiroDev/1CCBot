@@ -264,7 +264,6 @@ async def teknoparrot2(ctx):
     await ctx.send(help_cmd)
 
 @bot.command()
-@is_owner()
 async def teknoparrot(ctx):
     await ctx.send('Teknoparrot can be downloaded from https://teknoparrot.com/')
     await ctx.send('(Check <#434222178922135553> to see if your game is supported by jconfig first)')
