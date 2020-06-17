@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.3 S1'
+bot_version = '1.4'
 
 #owner id
 ownerid = 166189271244472320
@@ -35,10 +35,14 @@ import asyncio
 import os
 import subprocess
 import time
+import zipfile
+import shutil
+import hashlib 
 
 from discord.ext import commands
 from random import randint
 from datetime import datetime, timedelta, date
+from zipfile import ZipFile
 
 Roles = [
 "green",     
@@ -225,8 +229,8 @@ async def kickme(ctx):
 
     else:
         await ctx.send('You will be kicked in 10 seconds')
-        await ctx.author.send('https://discord.gg/UypwQ3R')
         await asyncio.sleep(10)
+        await ctx.author.send('https://discord.gg/UypwQ3R')
         await ctx.author.kick(reason='asked for it')
 
 @bot.command()
@@ -265,67 +269,262 @@ async def teknoparrot(ctx):
     await ctx.send('Teknoparrot can be downloaded from https://teknoparrot.com/')
     await ctx.send('(Check <#434222178922135553> to see if your game is supported by jconfig first)')
 
+def retrieve_file_paths(dirName):
+ 
+  # setup file paths variable
+  filePaths = []
+   
+  # Read all directory, subdirectories and file lists
+  for root, directories, files in os.walk(dirName):
+    for filename in files:
+        # Create the full filepath by using os module.
+        filePath = os.path.join(root, filename)
+        filePaths.append(filePath)
+         
+  # return all paths
+  return filePaths
+
+
 @bot.command()
 @commands.cooldown(1, 90, commands.BucketType.default)
 async def spicetools(ctx):
     #foreign channel checks
     #id's aren't hardcoded as the channels may be deleted and remade which would break an id check
 
-    #CN
+#CN
     if str(ctx.channel) == '中文':
-        #await ctx.send('您可以从下载 ' + spiceURL)
-        #await ctx.send('您可以从 ' + spiceURL + ' 下载')
         await ctx.send('请稍等片刻...')
         r = requests.get(spiceURL)
-        with open('Spicetools.zip', 'wb') as f:
+        with open('spicetools_ooc.zip', 'wb') as f:
             f.write(r.content)
-            
+
         if aprilfools==True:
             await ctx.send('*玩更好的游戏*')
             await asyncio.sleep(2)
             await ctx.author.send('开玩笑...')
-            await ctx.author.send(file=discord.File('Spicetools.zip'))
+            await ctx.author.send(file=discord.File('spicetools_ooc.zip'))
             return
 
         else:
+            zf = ZipFile('spicetools_ooc.zip', 'r')
+            #extract spicetools archive
+            zf.extractall('spice_extracted')
+            zf.close()
+            #delete source code file to reduce size
+            os.remove("spice_extracted/spicetools/src/spicetools-master.tar.gz")
+            #move info file to extracted spice directory
+            shutil.copyfile('txt/Spiceinfo_KR_CN_JP.txt', 'spice_extracted/spicetools/Info_KR_CN_JP.txt')
+            
+            #generate MD5s
+            spice32md5 = hashlib.md5(open('spice_extracted/spicetools/spice.exe','rb').read()).hexdigest()
+            spice64md5 = hashlib.md5(open('spice_extracted/spicetools/spice64.exe','rb').read()).hexdigest()
+            spicecfgmd5 = hashlib.md5(open('spice_extracted/spicetools/spicecfg.exe','rb').read()).hexdigest()
+
+            #create md5 folder and write md5's of exe files to txt files
+            os.mkdir("spice_extracted/spicetools/md5")
+            s32 = open("spice_extracted/spicetools/md5/spice.txt", "a")
+            s32.write(spice32md5)
+            s64 = open("spice_extracted/spicetools/md5/spice64.txt", "a")
+            s64.write(spice64md5)
+            scfg = open("spice_extracted/spicetools/md5/spicecfg.txt", "a")
+            scfg.write(spicecfgmd5)
+            
+            #close md5 txt files           
+            s32.close()
+            s64.close()
+            scfg.close()
+            
+            #define directory for rezipping
+            dir_name = 'spice_extracted/spicetools'
+            filePaths = retrieve_file_paths(dir_name)
+            newspice = zipfile.ZipFile('spicetools.zip', 'w')
+            with newspice:
+                for file in filePaths:
+                    newspice.write(file, compress_type=zipfile.ZIP_DEFLATED)
+            newspice.close()
+            
             await ctx.send(file=discord.File('Spicetools.zip'))
+
+            #delete files
+            shutil.rmtree("spice_extracted")
+            os.remove("spicetools.zip")
             return
-    #JP
+
+#JP
     if str(ctx.channel) == '日本語':
-        #await ctx.send(spiceURL + ' からダウンロードできます')
         await ctx.send('お待ちください...')
         r = requests.get(spiceURL)
-        with open('Spicetools.zip', 'wb') as f:
+        with open('spicetools_ooc.zip', 'wb') as f:
             f.write(r.content)
 
         if aprilfools==True:
             await ctx.send('*より良いゲームをプレイする*')
             await asyncio.sleep(2)
             await ctx.author.send('冗談だ')
-            await ctx.author.send(file=discord.File('Spicetools.zip'))
+            await ctx.author.send(file=discord.File('spicetools_ooc.zip'))
             return
 
         else:
+            zf = ZipFile('spicetools_ooc.zip', 'r')
+            #extract spicetools archive
+            zf.extractall('spice_extracted')
+            zf.close()
+            #delete source code file to reduce size
+            os.remove("spice_extracted/spicetools/src/spicetools-master.tar.gz")
+            #move info file to extracted spice directory
+            shutil.copyfile('txt/Spiceinfo_KR_CN_JP.txt', 'spice_extracted/spicetools/Info_KR_CN_JP.txt')
+            
+            #generate MD5s
+            spice32md5 = hashlib.md5(open('spice_extracted/spicetools/spice.exe','rb').read()).hexdigest()
+            spice64md5 = hashlib.md5(open('spice_extracted/spicetools/spice64.exe','rb').read()).hexdigest()
+            spicecfgmd5 = hashlib.md5(open('spice_extracted/spicetools/spicecfg.exe','rb').read()).hexdigest()
+
+            #create md5 folder and write md5's of exe files to txt files
+            os.mkdir("spice_extracted/spicetools/md5")
+            s32 = open("spice_extracted/spicetools/md5/spice.txt", "a")
+            s32.write(spice32md5)
+            s64 = open("spice_extracted/spicetools/md5/spice64.txt", "a")
+            s64.write(spice64md5)
+            scfg = open("spice_extracted/spicetools/md5/spicecfg.txt", "a")
+            scfg.write(spicecfgmd5)
+            
+            #close md5 txt files           
+            s32.close()
+            s64.close()
+            scfg.close()
+            
+            #define directory for rezipping
+            dir_name = 'spice_extracted/spicetools'
+            filePaths = retrieve_file_paths(dir_name)
+            newspice = zipfile.ZipFile('spicetools.zip', 'w')
+            with newspice:
+                for file in filePaths:
+                    newspice.write(file, compress_type=zipfile.ZIP_DEFLATED)
+            newspice.close()
+            
             await ctx.send(file=discord.File('Spicetools.zip'))
+
+            #delete files
+            shutil.rmtree("spice_extracted")
+            os.remove("spicetools.zip")
             return
 
-    #KR
+#KR
     if str(ctx.channel) == '한국어':
-#        await ctx.send(spiceURL +' 에서 얻을 수 있습니다')
         await ctx.send('기다려주세요 ...')
         r = requests.get(spiceURL)
-        with open('Spicetools.zip', 'wb') as f:
+        with open('spicetools_ooc.zip', 'wb') as f:
             f.write(r.content)
-            
+
         if aprilfools==True:
             await ctx.send('*접근 불가*')
             await asyncio.sleep(2)
             await ctx.author.send('만우절')
+            await ctx.author.send(file=discord.File('spicetools_ooc.zip'))
+            return
+
+        else:
+            zf = ZipFile('spicetools_ooc.zip', 'r')
+            #extract spicetools archive
+            zf.extractall('spice_extracted')
+            zf.close()
+            #delete source code file to reduce size
+            os.remove("spice_extracted/spicetools/src/spicetools-master.tar.gz")
+            #move info file to extracted spice directory
+            shutil.copyfile('txt/Spiceinfo_KR_CN_JP.txt', 'spice_extracted/spicetools/Info_KR_CN_JP.txt')
+            
+            #generate MD5s
+            spice32md5 = hashlib.md5(open('spice_extracted/spicetools/spice.exe','rb').read()).hexdigest()
+            spice64md5 = hashlib.md5(open('spice_extracted/spicetools/spice64.exe','rb').read()).hexdigest()
+            spicecfgmd5 = hashlib.md5(open('spice_extracted/spicetools/spicecfg.exe','rb').read()).hexdigest()
+
+            #create md5 folder and write md5's of exe files to txt files
+            os.mkdir("spice_extracted/spicetools/md5")
+            s32 = open("spice_extracted/spicetools/md5/spice.txt", "a")
+            s32.write(spice32md5)
+            s64 = open("spice_extracted/spicetools/md5/spice64.txt", "a")
+            s64.write(spice64md5)
+            scfg = open("spice_extracted/spicetools/md5/spicecfg.txt", "a")
+            scfg.write(spicecfgmd5)
+            
+            #close md5 txt files           
+            s32.close()
+            s64.close()
+            scfg.close()
+            
+            #define directory for rezipping
+            dir_name = 'spice_extracted/spicetools'
+            filePaths = retrieve_file_paths(dir_name)
+            newspice = zipfile.ZipFile('spicetools.zip', 'w')
+            with newspice:
+                for file in filePaths:
+                    newspice.write(file, compress_type=zipfile.ZIP_DEFLATED)
+            newspice.close()
+            
+            await ctx.send(file=discord.File('Spicetools.zip'))
+
+            #delete files
+            shutil.rmtree("spice_extracted")
+            os.remove("spicetools.zip")
+            return
+
+    #TEST
+    if str(ctx.channel) == 'hidden_test':
+        await ctx.send('Please wait...')
+        r = requests.get(spiceURL)
+        with open('spicetools_ooc.zip', 'wb') as f:
+            f.write(r.content)
+
+        if aprilfools==True:
+            await ctx.send('af_string')
+            await asyncio.sleep(2)
+            await ctx.author.send('af_jk_string')
             await ctx.author.send(file=discord.File('Spicetools.zip'))
             return
 
         else:
+            zf = ZipFile('spicetools_ooc.zip', 'r')
+            #extract spicetools archive
+            zf.extractall('spice_extracted')
+            zf.close()
+            #delete source code file to reduce size
+            os.remove("spice_extracted/spicetools/src/spicetools-master.tar.gz")
+            #move info file to extracted spice directory
+            shutil.copyfile('txt/Spiceinfo_KR_CN_JP.txt', 'spice_extracted/spicetools/Info_KR_CN_JP.txt')
+            
+            #generate MD5s
+            spice32md5 = hashlib.md5(open('spice_extracted/spicetools/spice.exe','rb').read()).hexdigest()
+            spice64md5 = hashlib.md5(open('spice_extracted/spicetools/spice64.exe','rb').read()).hexdigest()
+            spicecfgmd5 = hashlib.md5(open('spice_extracted/spicetools/spicecfg.exe','rb').read()).hexdigest()
+
+            #create md5 folder and write md5's of exe files to txt files
+            os.mkdir("spice_extracted/spicetools/md5")
+            s32 = open("spice_extracted/spicetools/md5/spice.txt", "a")
+            s32.write(spice32md5)
+            s64 = open("spice_extracted/spicetools/md5/spice64.txt", "a")
+            s64.write(spice64md5)
+            scfg = open("spice_extracted/spicetools/md5/spicecfg.txt", "a")
+            scfg.write(spicecfgmd5)
+            
+            #close md5 txt files           
+            s32.close()
+            s64.close()
+            scfg.close()
+            
+            #define directory for rezipping
+            dir_name = 'spice_extracted/spicetools'
+            filePaths = retrieve_file_paths(dir_name)
+            newspice = zipfile.ZipFile('spicetools.zip', 'w')
+            with newspice:
+                for file in filePaths:
+                    newspice.write(file, compress_type=zipfile.ZIP_DEFLATED)
+            newspice.close()
+            
             await ctx.send(file=discord.File('Spicetools.zip'))
+
+            #delete files
+            shutil.rmtree("spice_extracted")
+            os.remove("spicetools.zip")
             return
 
     else:
