@@ -346,7 +346,7 @@ async def spicetools(ctx):
 
             #delete files
             shutil.rmtree("spice_extracted")
-            os.remove("spicetools.zip")
+            os.remove("Spicetools.zip")
             return
 
 #JP
@@ -395,7 +395,7 @@ async def spicetools(ctx):
             #define directory for rezipping
             dir_name = 'spice_extracted/spicetools'
             filePaths = retrieve_file_paths(dir_name)
-            newspice = zipfile.ZipFile('spicetools.zip', 'w')
+            newspice = zipfile.ZipFile('Spicetools.zip', 'w')
             with newspice:
                 for file in filePaths:
                     newspice.write(file, compress_type=zipfile.ZIP_DEFLATED)
@@ -405,7 +405,7 @@ async def spicetools(ctx):
 
             #delete files
             shutil.rmtree("spice_extracted")
-            os.remove("spicetools.zip")
+            os.remove("Spicetools.zip")
             return
 
 #KR
@@ -454,7 +454,7 @@ async def spicetools(ctx):
             #define directory for rezipping
             dir_name = 'spice_extracted/spicetools'
             filePaths = retrieve_file_paths(dir_name)
-            newspice = zipfile.ZipFile('spicetools.zip', 'w')
+            newspice = zipfile.ZipFile('Spicetools.zip', 'w')
             with newspice:
                 for file in filePaths:
                     newspice.write(file, compress_type=zipfile.ZIP_DEFLATED)
@@ -464,7 +464,7 @@ async def spicetools(ctx):
 
             #delete files
             shutil.rmtree("spice_extracted")
-            os.remove("spicetools.zip")
+            os.remove("Spicetools.zip")
             return
 
     #TEST
@@ -513,7 +513,7 @@ async def spicetools(ctx):
             #define directory for rezipping
             dir_name = 'spice_extracted/spicetools'
             filePaths = retrieve_file_paths(dir_name)
-            newspice = zipfile.ZipFile('spicetools.zip', 'w')
+            newspice = zipfile.ZipFile('Spicetools.zip', 'w')
             with newspice:
                 for file in filePaths:
                     newspice.write(file, compress_type=zipfile.ZIP_DEFLATED)
@@ -523,7 +523,7 @@ async def spicetools(ctx):
 
             #delete files
             shutil.rmtree("spice_extracted")
-            os.remove("spicetools.zip")
+            os.remove("Spicetools.zip")
             return
 
     else:
