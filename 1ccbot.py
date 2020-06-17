@@ -336,7 +336,7 @@ async def spicetools(ctx):
             #define directory for rezipping
             dir_name = 'spice_extracted/spicetools'
             filePaths = retrieve_file_paths(dir_name)
-            newspice = zipfile.ZipFile('spicetools.zip', 'w')
+            newspice = zipfile.ZipFile('Spicetools.zip', 'w')
             with newspice:
                 for file in filePaths:
                     newspice.write(file, compress_type=zipfile.ZIP_DEFLATED)
