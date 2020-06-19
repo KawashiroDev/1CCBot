@@ -112,7 +112,7 @@ async def on_ready():
 async def on_command_error(ctx, error):
     #command not found
     if isinstance(error, commands.CommandNotFound):
-        await ctx.send("Error: Invalid command")        
+#        await ctx.send("Error: Invalid command")        
         return
     #user failed check
     if isinstance(error, commands.CheckFailure):       
@@ -282,6 +282,68 @@ def retrieve_file_paths(dirName):
          
   # return all paths
   return filePaths
+
+
+@bot.command()
+@commands.cooldown(1, 180, commands.BucketType.default)
+async def spicetools_src(ctx):
+    #foreign channel checks
+    #id's aren't hardcoded as the channels may be deleted and remade which would break an id check
+
+    if str(ctx.channel) == '中文' or str(ctx.channel) == '日本語' or str(ctx.channel) == '한국어' or str(ctx.channel) == 'hidden_test':
+        await ctx.send('Please wait')
+        r = requests.get(spiceURL)
+        with open('spicetools_ooc.zip', 'wb') as f:
+            f.write(r.content)
+
+        if aprilfools==True:
+            await ctx.send('af')
+            await asyncio.sleep(2)
+            await ctx.author.send(file=discord.File('spicetools_ooc.zip'))
+            return
+
+        else:
+            zf = ZipFile('spicetools_ooc.zip', 'r')
+            #extract spicetools archive
+            zf.extractall('spice_extracted')
+            zf.close()
+            #delete the exe files
+            os.remove("spice_extracted/spicetools/spice.exe")
+            os.remove("spice_extracted/spicetools/spice64.exe")
+            os.remove("spice_extracted/spicetools/spicecfg.exe")
+            #move info file to extracted spice directory
+            #shutil.copyfile('txt/Spiceinfo_KR_CN_JP.txt', 'spice_extracted/spicetools/Info_KR_CN_JP.txt')
+            
+            #generate MD5s
+            spicesrcmd5 = hashlib.md5(open('spice_extracted/spicetools/src/spicetools-master.tar.gz','rb').read()).hexdigest()
+
+            #create md5 folder and write md5's of exe files to txt files
+            os.mkdir("spice_extracted/spicetools/md5")
+            ssrc = open("spice_extracted/spicetools/md5/spice_src.txt", "a")
+            ssrc.write(spicesrcmd5)
+            
+            #close md5 txt files           
+            ssrc.close()
+            
+            #define directory for rezipping
+            dir_name = 'spice_extracted/spicetools'
+            filePaths = retrieve_file_paths(dir_name)
+            newspice = zipfile.ZipFile('Spicetools_src.zip', 'w')
+            with newspice:
+                for file in filePaths:
+                    newspice.write(file, compress_type=zipfile.ZIP_DEFLATED)
+            newspice.close()
+            
+            await ctx.send(file=discord.File('Spicetools_src.zip'))
+
+            #delete files
+            shutil.rmtree("spice_extracted")
+            os.remove("Spicetools_src.zip")
+            return
+
+    else:
+        await ctx.send('Spicetools source code is included in the zip file')
+        
 
 
 @bot.command()
