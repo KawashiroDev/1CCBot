@@ -2,11 +2,12 @@
 
 Blech - send a <:cirBlech:415143187762511872>
 About - Bot information
+Kickme - Self explanatory
 Help - View this
-Kickme - Do i really need to explain what this does?
 
 Jconfig - Download latest Jconfig
 Spicetools - Download latest Spicetools
+Spicetools_src - Download spicetools src
 Bemanitools - Download latest Bemanitools
 Teknoparrot - Download latest Teknoparrot
 xrpcv - Download xrpcv from HT (likely outdated)
