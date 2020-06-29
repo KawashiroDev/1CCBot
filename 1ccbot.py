@@ -136,6 +136,10 @@ async def on_message(message):
 #role giving thingy, Removes the new guy role from a new user and assigns them a new role at random when they send a message
     role = discord.utils.get(message.guild.roles, name="new guy")
     if role in message.author.roles:
+        
+        if "test jconfig" in contents.lower():
+            return
+        
         #print('[debug] User has new guy role, giving a role')
         user=message.author
         newrole=discord.utils.get(message.guild.roles, name=secure_random.choice(Roles))
@@ -155,6 +159,14 @@ async def on_message(message):
             #print('[Debug] Giving user ' + str(newrole))
             await user.add_roles(newrole, reason='User introduced themself')
             return
+
+    role = discord.utils.get(message.guild.roles, name="Member")
+    if role in message.author.roles:
+        user=message.author
+        memberrole=discord.utils.get(message.guild.roles, name='Member')
+        await user.remove_roles(memberrole, reason='Unnecessary role')
+        return
+
         
     
     if str(message.author.id) in badactors and "hdd" in contents.lower():
