@@ -672,8 +672,20 @@ async def console(ctx):
 #debug commands    
 @bot.command()
 async def ping(ctx):
-    await ctx.send('pong')    
-
+    await ctx.send('pong')
+    
+@bot.command()
+async def rs(ctx):
+    if ctx.author.id == ownerid:
+        
+        image = "Avatars/" + random.choice(os.listdir("Avatars"))
+        newavatar = open(image, 'rb')
+        await ctx.guild.edit(name="/1CC/ - Arcade and Doujin", icon = newavatar.read())
+        await ctx.send("ok")
+        return
+    else:
+        await ctx.send("ok")
+    
 @bot.command()
 async def errortest(ctx):
     await()
