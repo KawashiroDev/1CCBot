@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.4'
+bot_version = '1.4 R1'
 
 #owner id
 ownerid = 166189271244472320
@@ -131,6 +131,17 @@ async def on_message(message):
     if message.author == bot.user:
         return
     if message.author.bot:
+        return
+    if "https://bemaniso.ws/freeinvite.php" in contents.lower():
+        await message.channel.send("^Fake invite link")
+        return
+    
+    if "ligma" in contents.lower() and str(message.channel) == "invites":
+        await message.delete()
+        return
+    
+    if "onlyfans" in contents.lower() and str(message.channel) == "invites":
+        await message.delete()
         return
 
 #role giving thingy, Removes the new guy role from a new user and assigns them a new role at random when they send a message
