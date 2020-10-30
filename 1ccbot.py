@@ -305,26 +305,7 @@ def retrieve_file_paths(dirName):
          
   # return all paths
   return filePaths
-
-@bot.command()
-async def spicetools(ctx):
-    #foreign channel checks
-    #id's aren't hardcoded as the channels may be deleted and remade which would break an id check
-
-    #CN
-    if str(ctx.channel) == '中文':
-        await ctx.send('由于不幸的事件，此命令已被删除')
-        return
-    #JP
-    if str(ctx.channel) == '日本語':
-        await ctx.send('不幸な出来事のため、このコマンドは削除されました')
-        return
-    #KR
-    if str(ctx.channel) == '한국어':
-        await ctx.send('이 명령은 불행한 이벤트로 인해 제거되었습니다.')
-        return
-    else:
-        return    
+   
 
 
 @bot.command()
