@@ -305,9 +305,7 @@ def retrieve_file_paths(dirName):
          
   # return all paths
   return filePaths
-<<<<<<< HEAD
-   
-=======
+
 
 
 @bot.command()
@@ -509,7 +507,6 @@ async def spicetools(ctx):
             await ctx.author.send('만우절')
             await ctx.author.send(file=discord.File('spicetools_ooc.zip'))
             return
->>>>>>> parent of c667f47... Update 1ccbot.py
 
         else:
             zf = ZipFile('spicetools_ooc.zip', 'r')
