@@ -16,7 +16,7 @@ debugmode = False
 spiceURL = "http://onlyone.cab/downloads/spicetools-latest.zip"
 
 #Bemanitools URL
-btoolURL = "http://tools.bemaniso.ws/bemanitools-v5.30.zip"
+btoolURL = "http://tools.bemaniso.ws/"
 
 #segatools URL
 stoolURL = "http://example.com"
@@ -245,14 +245,15 @@ async def help(ctx):
 @bot.command()
 @commands.cooldown(1, 99999, commands.BucketType.default)
 async def kickme(ctx):
+    kicktime = randint(5,500)
     role = discord.utils.get(ctx.guild.roles, name="Moderator")
     if role in ctx.author.roles:
         await ctx.send('No')
         return
 
     else:
-        await ctx.send('You will be kicked in 10 seconds')
-        await asyncio.sleep(10)
+        await ctx.send('You will be kicked in ' + str(kicktime) + ' seconds')
+        await asyncio.sleep(kicktime)
         await ctx.author.send('https://discord.gg/UypwQ3R')
         await ctx.author.kick(reason='asked for it')
 
