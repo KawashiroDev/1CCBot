@@ -1,10 +1,10 @@
-#1ccbot created by 99710
+#1ccbot created by KawashiroDev
 #based on TB 2.0.9
 
 ##Parameters##
 
 #Version
-bot_version = '1.4 R1'
+bot_version = '1.5'
 
 #owner id
 ownerid = 166189271244472320
@@ -37,7 +37,8 @@ import subprocess
 import time
 import zipfile
 import shutil
-import hashlib 
+import hashlib
+import setproctitle
 
 from discord.ext import commands
 from random import randint
@@ -68,6 +69,9 @@ Roles_special = [
 ]
 
 print('Please wait warmly...')
+
+#change process title
+setproctitle.setproctitle('1CCBot')
 
 #initial_extensions = ['Modules.image', 'Modules.booru']
 client = discord.Client()
@@ -100,10 +104,11 @@ badactors_m = user_blacklist_main.read()
 async def on_ready():
     print(' ')
     print('Username - ' + bot.user.name)
-    print('TenshiBot Ver - ' + bot_version)
+    print('Version - ' + bot_version)
     await bot.change_presence(activity=discord.Game(name="Startup complete"))
-    await asyncio.sleep(7)
-    await bot.change_presence(activity=discord.Streaming(name="/1CC/", url='https://twitch.tv/99710'))
+    await asyncio.sleep(3)
+    await bot.change_presence(activity=discord.Game(name="/"))
+    #await bot.change_presence(activity=discord.Streaming(name="/1CC/", url='https://twitch.tv/99710'))
 
     
 #error event code
@@ -133,7 +138,11 @@ async def on_message(message):
     if message.author.bot:
         return
     if "https://bemaniso.ws/freeinvite.php" in contents.lower():
-        await message.channel.send("^Fake invite link")
+        await message.channel.send("^Bait")
+        return
+
+    if "http://bemaniso.ws/freeinvite.php" in contents.lower():
+        await message.channel.send("^Bait")
         return
     
     if "ligma" in contents.lower() and str(message.channel) == "invites":
@@ -146,10 +155,15 @@ async def on_message(message):
 
 #role giving thingy, Removes the new guy role from a new user and assigns them a new role at random when they send a message
     role = discord.utils.get(message.guild.roles, name="new guy")
-    if role in message.author.roles:
+    if role in message.author.roles and str(message.channel) == "introductions":
         
         if "test jconfig" in contents.lower():
             return
+
+        if len(message.content) < 5:
+            await message.channel.send("Your introduction is too short")
+            return
+        
         
         #print('[debug] User has new guy role, giving a role')
         user=message.author
@@ -177,6 +191,12 @@ async def on_message(message):
         memberrole=discord.utils.get(message.guild.roles, name='Member')
         await user.remove_roles(memberrole, reason='Unnecessary role')
         return
+
+    role = discord.utils.get(message.guild.roles, name="kickme")
+    if role in message.author.roles:
+        #user=message.author
+        #print(user.id)
+        await message.author.kick(reason='user had "kickme" role')
 
         
     
@@ -241,6 +261,16 @@ async def help(ctx):
     await ctx.send(help_cmd)
 
 #misc commands
+
+@bot.command()
+async def restart(ctx):
+    if ctx.author.id != ownerid:
+        return
+    else:
+        await ctx.send("Restarting...")
+        os.system("chmod +x reboot.sh")        
+        os.system("./reboot.sh")
+        return
     
 @bot.command()
 @commands.cooldown(1, 99999, commands.BucketType.default)
@@ -253,7 +283,7 @@ async def kickme(ctx):
     else:
         await ctx.send('You will be kicked in 10 seconds')
         await asyncio.sleep(10)
-        await ctx.author.send('https://discord.gg/UypwQ3R')
+        #await ctx.author.send('https://discord.gg/UypwQ3R')
         await ctx.author.kick(reason='asked for it')
 
 @bot.command()
