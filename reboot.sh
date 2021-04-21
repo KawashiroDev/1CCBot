@@ -1,0 +1,3 @@
+echo Restarting 1CCBot...
+pkill 1CCBot
+python3.7 1ccbot.py
