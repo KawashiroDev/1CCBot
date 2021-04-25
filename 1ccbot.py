@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.5'
+bot_version = '1.6'
 
 #owner id
 ownerid = 166189271244472320
@@ -76,11 +76,16 @@ setproctitle.setproctitle('1CCBot')
 #initial_extensions = ['Modules.image', 'Modules.booru']
 client = discord.Client()
 
+intents = discord.Intents.default()
+intents.typing = False
+intents.presences = True
+intents.members = True
+
 if debugmode == True:
     bot = commands.Bot(command_prefix=("1c."), case_insensitive=True)
     print ("debug")
 else:
-    bot = commands.Bot(command_prefix=commands.when_mentioned, case_insensitive=True)
+    bot = commands.Bot(command_prefix=commands.when_mentioned, case_insensitive=True, intents=intents)
     
 bot.remove_command("help")
 
@@ -125,6 +130,24 @@ async def on_command_error(ctx, error):
     else:
         await ctx.send(error)
         print(error)
+        return
+
+@bot.event
+async def on_member_update(before, after):
+    modrole = discord.utils.get(after.roles, name="Moderator")
+    #print(after.nick)
+    nickname = str(after.nick)
+    crappynick = nickname.startswith('!')
+    name = str(after.name)
+    crappyname = name.startswith('!')
+    if modrole in after.roles:
+        return
+    if crappynick == True:
+        await after.edit(nick = "\U0001F4A9")
+    if crappyname == True:
+        newname = (name.replace('!', ''))
+        await after.edit(nick = newname)
+    else:
         return
 
 @bot.event
@@ -193,10 +216,14 @@ async def on_message(message):
         return
 
     role = discord.utils.get(message.guild.roles, name="kickme")
+    modrole = discord.utils.get(message.guild.roles, name="Moderator")
     if role in message.author.roles:
+        if modrole in message.author.roles:
+            return
+        else:
         #user=message.author
         #print(user.id)
-        await message.author.kick(reason='user had "kickme" role')
+            await message.author.kick(reason='user had "kickme" role')
 
         
     
