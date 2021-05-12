@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.6'
+bot_version = '1.6.1'
 
 #owner id
 ownerid = 166189271244472320
@@ -96,12 +96,20 @@ secure_random = random.SystemRandom()
 user_blacklist = open("txt/badactors.txt", "r")
 badactors = user_blacklist.read()
 
+user_tinfoil = open("txt/tinfoil.txt", "r")
+tinfoil = user_tinfoil.read()
+
 user_blacklist_main = open("txt/badactors_m.txt", "r")
 badactors_m = user_blacklist_main.read()
 
 #if __name__ == '__main__':
 #    for extension in initial_extensions:
 #        bot.load_extension(extension)
+
+def strip_non_ascii(string):
+    ''' Returns the string without non ASCII characters'''
+    stripped = (c for c in string if 0 < ord(c) < 127)
+    return ''.join(stripped)
 
 
 #ready status display
@@ -433,6 +441,8 @@ async def spicetools_src(ctx):
 async def spicetools(ctx):
     #foreign channel checks
     #id's aren't hardcoded as the channels may be deleted and remade which would break an id check
+    #asciinick = strip_non_ascii(ctx.author.nick)
+    #asciiusername = strip_non_ascii(ctx.author.name)
 
 #CN
     if str(ctx.channel) == '中文':
@@ -677,8 +687,24 @@ async def spicetools(ctx):
             await ctx.author.send('April fools!. Spicetools can be downloaded from ' + spiceURL)
             return
         else:
-            await ctx.send('Spicetools can be downloaded from ' + spiceURL)
-            return
+            print (ctx.author.nick)
+            nick = ctx.author.nick
+            name = ctx.author.name
+            
+            if nick == None:
+                await ctx.send("Hi " + name + ", Spicetools can be downloaded from " + spiceURL)
+                return
+            
+            if "@everyone" in nick:
+                await ctx.send("Hi `" + nick + "`, Spicetools can be downloaded from " + spiceURL)
+                return
+            if "@here" in nick:
+                await ctx.send("Hi `" + nick + "`, Spicetools can be downloaded from " + spiceURL)
+                return
+            else:
+                await ctx.send("Hi " + asciinick + ", Spicetools can be downloaded from " + spiceURL)   
+                return
+
 
 @bot.command()
 async def bemanitools(ctx):
