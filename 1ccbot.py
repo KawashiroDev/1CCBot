@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.6.1'
+bot_version = '1.6.1 R1'
 
 #owner id
 ownerid = 166189271244472320
@@ -143,15 +143,24 @@ async def on_command_error(ctx, error):
 @bot.event
 async def on_member_update(before, after):
     modrole = discord.utils.get(after.roles, name="Moderator")
+    lockednick = discord.utils.get(after.roles, name="NoNickname")
     #print(after.nick)
     nickname = str(after.nick)
+    
     crappynick = nickname.startswith('!')
+    crappynick2 = nickname.startswith('(')
+    
     name = str(after.name)
     crappyname = name.startswith('!')
     if modrole in after.roles:
         return
+    if lockednick in after.roles:
+        await after.edit(nick = None, reason = "NoNickname role")
+        return
     if crappynick == True:
         await after.edit(nick = "\U0001F4A9")
+    if crappynick2 == True:
+        await after.edit(nick = None)
     if crappyname == True:
         newname = (name.replace('!', ''))
         await after.edit(nick = newname)
