@@ -167,6 +167,18 @@ async def on_member_update(before, after):
     else:
         return
 
+#@bot.event
+#async def on_member_unban(guild, user):
+#    print(user.id)
+
+@bot.event
+async def on_member_join(member):
+    pb = open("txt/permaban.txt", "r")
+    permaban = pb.read()
+    if str(member.id) in permaban:
+        await member.ban(reason='permaban')
+        return
+
 @bot.event
 async def on_message(message):
     emoji = '\U0001F6AB'
