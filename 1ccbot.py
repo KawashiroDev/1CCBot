@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.6.1 R1'
+bot_version = '1.6.2'
 
 #owner id
 ownerid = 166189271244472320
@@ -208,12 +208,14 @@ async def on_message(message):
 #role giving thingy, Removes the new guy role from a new user and assigns them a new role at random when they send a message
     role = discord.utils.get(message.guild.roles, name="new guy")
     if role in message.author.roles and str(message.channel) == "introductions":
-        
+
+    name = ctx.author.name
+    
         if "test jconfig" in contents.lower():
             return
 
-        if len(message.content) < 5:
-            await message.channel.send("Your introduction is too short")
+        if len(message.content) < 7:
+            await message.channel.send(name + ", Your introduction is too short")
             return
         
         
@@ -266,23 +268,23 @@ async def on_message(message):
     
 #game hdd checks
     if "iidx hdd" in contents.lower():  
-        await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
+        #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
         return
 
     if "sdvx hdd" in contents.lower(): 
-        await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
+        #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
         return
 
     if "ddr hdd" in contents.lower():   
-        await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
+        #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
         return
 
     if "popn hdd" in contents.lower():   
-        await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
+        #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
         return
 
     if "jubeat hdd" in contents.lower():   
-        await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
+        #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
         return
 
 #    if "generic hdd" in contents.lower():   
@@ -749,10 +751,10 @@ async def bemanitools(ctx):
         await ctx.send('Bemanitools can be downloaded from ' + btoolURL)
         return     
 
-@bot.command()
-async def xrpcv(ctx):
-    await ctx.send('Xrpcv can be downloaded from http://193.70.38.209/file/xrpcv_2202.7z')
-    await ctx.send('Consider using asphyxia instead')
+#@bot.command()
+#async def xrpcv(ctx):
+#    await ctx.send('Xrpcv can be downloaded from http://193.70.38.209/file/xrpcv_2202.7z')
+#    await ctx.send('Consider using asphyxia instead')
 
 @bot.command()
 async def jconfig(ctx):
@@ -825,7 +827,7 @@ async def about(ctx):
     em.add_field(name="Version", value=bot_version, inline=False)
     em.add_field(name="Uptime", value=uptime, inline=False)
     em.add_field(name="1ccbot.py timestamp", value=buildinfo, inline=False)
-    em.set_footer(text="Created by 99710")
+    em.set_footer(text="Created by KawashiroDev")
     await ctx.send(embed=em)
 
 @bot.command()
