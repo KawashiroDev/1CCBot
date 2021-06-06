@@ -13,7 +13,7 @@ ownerid = 166189271244472320
 debugmode = False
 
 #Spicetools URL
-spiceURL = "http://onlyone.cab/downloads/spicetools-latest.zip"
+spiceURL = "https://onlyone.cab/downloads/spicetools-21-04-27.zip"
 
 #Bemanitools URL
 btoolURL = "http://tools.bemaniso.ws/"
