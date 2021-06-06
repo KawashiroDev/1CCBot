@@ -13,7 +13,10 @@ ownerid = 166189271244472320
 debugmode = False
 
 #Spicetools URL
-spiceURL = "https://onlyone.cab/downloads/spicetools-21-04-27.zip"
+spiceURL = "http://onlyone.cab/downloads/spicetools-latest.zip"
+
+#Spicetools URL
+spiceURL2 = "https://cdn.discordapp.com/attachments/382177207851941889/847878541677035530/spicetools-21-05-29.zip"
 
 #Bemanitools URL
 btoolURL = "http://tools.bemaniso.ws/"
@@ -458,10 +461,14 @@ async def spicetools_src(ctx):
         await ctx.send('Spicetools source code is included in the zip file')
         
 
+@bot.command()
+async def spicetools(ctx):
+    await ctx.send("Hi " + name + ", Spicetools can be downloaded from " + spiceURL2)
+
 
 @bot.command()
 @commands.cooldown(1, 90, commands.BucketType.default)
-async def spicetools(ctx):
+async def spicetools1(ctx):
     #foreign channel checks
     #id's aren't hardcoded as the channels may be deleted and remade which would break an id check
     #asciinick = strip_non_ascii(ctx.author.nick)
