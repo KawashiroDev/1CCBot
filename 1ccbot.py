@@ -463,6 +463,7 @@ async def spicetools_src(ctx):
 
 @bot.command()
 async def spicetools(ctx):
+    name = ctx.author.name
     await ctx.send("Hi " + name + ", Spicetools can be downloaded from " + spiceURL2)
 
 
