@@ -212,7 +212,7 @@ async def on_message(message):
     role = discord.utils.get(message.guild.roles, name="new guy")
     if role in message.author.roles and str(message.channel) == "introductions":
 
-        name = ctx.author.name
+        name = message.author.name
     
         if "test jconfig" in contents.lower():
             return
