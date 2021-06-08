@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.6.2'
+bot_version = '1.6.3'
 
 #owner id
 ownerid = 166189271244472320
@@ -176,11 +176,18 @@ async def on_member_update(before, after):
 
 @bot.event
 async def on_member_join(member):
+    #channel = member.guild.get_channel("162861213309599744")
     pb = open("txt/permaban.txt", "r")
     permaban = pb.read()
     if str(member.id) in permaban:
         await member.ban(reason='permaban')
         return
+
+    print(member.name)
+    if "h0nde" in member.name.lower():
+        await member.ban(reason='autoban (join spam)')
+        #await channel.send("<@166189271244472320>")
+    return
 
 @bot.event
 async def on_message(message):
@@ -188,10 +195,10 @@ async def on_message(message):
     contents = message.content
     hdd = open("txt/hddtext.txt", "r")
     hddtext = hdd.read()
-    if message.author == bot.user:
-        return
-    if message.author.bot:
-        return
+    #if message.author == bot.user:
+        #return
+    #if message.author.bot:
+        #return
     if "https://bemaniso.ws/freeinvite.php" in contents.lower():
         await message.channel.send("^Bait")
         return
@@ -268,6 +275,10 @@ async def on_message(message):
 
     if str(message.author.id) in badactors_m:
         return
+
+    if "h0nde" in contents.lower() and str(message.author.id) == "155149108183695360":
+        await message.delete()
+        return
     
 #game hdd checks
     if "iidx hdd" in contents.lower():  
@@ -300,6 +311,12 @@ async def on_message(message):
 @bot.event
 async def on_command(ctx):
     print("[command] " + ctx.message.content[len("="):].strip() + " / " + str(ctx.guild))
+    return
+
+
+@bot.event
+async def on_member_remove(member):
+    #print(member.name)
     return
 
 #owner check
