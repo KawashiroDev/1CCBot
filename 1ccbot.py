@@ -398,7 +398,7 @@ async def teknoparrot2(ctx):
 @bot.command()
 async def teknoparrot(ctx):
     await ctx.send('Teknoparrot can be downloaded from https://teknoparrot.com/')
-    await ctx.send('(Check <#434222178922135553> to see if your game is supported by jconfig first)')
+    #await ctx.send('(Check <#434222178922135553> to see if your game is supported by jconfig first)')
 
 def retrieve_file_paths(dirName):
  
