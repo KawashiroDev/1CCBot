@@ -170,6 +170,13 @@ async def on_member_update(before, after):
     else:
         return
 
+@bot.event
+async def on_guild_update(before, after):
+    image = "Avatars/" + random.choice(os.listdir("Avatars"))
+    newavatar = open(image, 'rb')
+    await after.edit(name="/1CC/ - Arcade and Doujin", icon = newavatar.read())
+    return
+
 #@bot.event
 #async def on_member_unban(guild, user):
 #    print(user.id)
