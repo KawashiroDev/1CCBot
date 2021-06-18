@@ -231,6 +231,9 @@ async def on_message(message):
         if "test jconfig" in contents.lower():
             return
 
+        if "streancommunuty" in contents.lower():
+            await message.author.ban(reason='Autoban: fake URL trade scam)', delete_message_days=1)
+
         if len(message.content) < 7:
             await message.channel.send(name + ", Your introduction is too short")
             return
