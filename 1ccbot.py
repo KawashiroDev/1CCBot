@@ -172,9 +172,10 @@ async def on_member_update(before, after):
 
 @bot.event
 async def on_guild_update(before, after):
+    await asyncio.sleep(2)
     image = "Avatars/" + random.choice(os.listdir("Avatars"))
     newavatar = open(image, 'rb')
-    await after.edit(name="/1CC/ - Arcade and Doujin", icon = newavatar.read())
+    await after.edit(name="/1CC/ - Arcade and Doujin", icon = newavatar.read(), default_notifications = only_mentions)
     return
 
 #@bot.event
