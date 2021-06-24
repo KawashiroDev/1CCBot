@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.6.3'
+bot_version = '1.6.4'
 
 #owner id
 ownerid = 166189271244472320
@@ -292,13 +292,23 @@ async def on_message(message):
         await message.delete()
         return
     
-#game hdd checks
+#game hdd/ssd checks
     if "iidx hdd" in contents.lower():  
         #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
+        await message.channel.send(file=discord.File("pics/hdd/" + random.choice(os.listdir("pics/hdd"))))
         return
 
     if "sdvx hdd" in contents.lower(): 
         #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
+        return
+
+    if "iidx ssd" in contents.lower():  
+        #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'SSD' is")
+        await message.channel.send(file=discord.File("pics/hdd/" + random.choice(os.listdir("pics/hdd"))))
+        return
+
+    if "sdvx ssd" in contents.lower(): 
+        #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'SSD' is")
         return
 
     if "ddr hdd" in contents.lower():   
@@ -311,6 +321,11 @@ async def on_message(message):
 
     if "jubeat hdd" in contents.lower():   
         #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
+        return
+
+    if "jubeat ssd" in contents.lower():   
+        #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
+        await message.channel.send("<@" + str(message.author.id) +">" + '** No**', file=discord.File('pics/brazil.png'))
         return
 
 #    if "generic hdd" in contents.lower():   
