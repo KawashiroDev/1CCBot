@@ -121,7 +121,7 @@ async def on_ready():
     print(' ')
     print('Username - ' + bot.user.name)
     print('Version - ' + bot_version)
-    await bot.change_presence(activity=discord.Game(name="Startup complete"))
+    await bot.change_presence(activity=discord.Game(name="/"))
     await asyncio.sleep(3)
     await bot.change_presence(activity=discord.Game(name="/"))
     #await bot.change_presence(activity=discord.Streaming(name="/1CC/", url='https://twitch.tv/99710'))
@@ -172,10 +172,11 @@ async def on_member_update(before, after):
 
 @bot.event
 async def on_guild_update(before, after):
-    await asyncio.sleep(2)
+    mentions = discord.NotificationLevel.only_mentions
+    await asyncio.sleep(3)
     image = "Avatars/" + random.choice(os.listdir("Avatars"))
     newavatar = open(image, 'rb')
-    await after.edit(name="/1CC/ - Arcade and Doujin", icon = newavatar.read(), default_notifications = only_mentions)
+    await after.edit(name="/1CC/ - Arcade and Doujin", icon = newavatar.read(), default_notifications = mentions)
     return
 
 #@bot.event
@@ -375,6 +376,20 @@ async def kickme(ctx):
         await asyncio.sleep(kicktime)
         #await ctx.author.send('https://discord.gg/UypwQ3R')
         await ctx.author.kick(reason='asked for it')
+
+@bot.command()
+@is_owner()
+async def rpurge(ctx, chanid, number):
+    yuyuko = bot.get_channel(int(chanid))
+    print (yuyuko)
+    await yuyuko.purge(limit=int(number))
+
+@bot.command()
+@is_owner()
+async def rdel(ctx, msgid):
+    yuyuko = await ctx.fetch_message(int(msgid))
+    print (yuyuko)
+    await yuyuko.delete()
 
 @bot.command()
 async def blech(ctx):
