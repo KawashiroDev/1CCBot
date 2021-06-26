@@ -323,7 +323,7 @@ async def on_message(message):
         #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
         return
 
-    if "jubeat ssd" in contents.lower():   
+    if "hdd dump crack" in contents.lower():   
         #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
         await message.channel.send("<@" + str(message.author.id) +">" + '** No**', file=discord.File('pics/brazil.png'))
         return
