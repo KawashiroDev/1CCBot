@@ -226,12 +226,23 @@ async def on_message(message):
 
 #role giving thingy, Removes the new guy role from a new user and assigns them a new role at random when they send a message
     role = discord.utils.get(message.guild.roles, name="new guy")
+    nointro = discord.utils.get(message.guild.roles, name="NoIntroductions")
+    user=message.author
     if role in message.author.roles and str(message.channel) == "introductions":
 
         name = message.author.name
     
         if "test jconfig" in contents.lower():
             return
+
+        if " uwu " in contents.lower():
+            #await user.add_roles(nointro, reason='cringe intro')
+            await message.channel.send(name + ", Your introduction is too cringe")
+            return
+
+        #if "ccp" in contents.lower():
+            #await user.add_roles(nointro, reason='Shit intro')
+            #return
 
         if "streancommunuty" in contents.lower():
             await message.author.ban(reason='Autoban: fake URL trade scam)', delete_message_days=1)
