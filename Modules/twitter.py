@@ -2,7 +2,7 @@
 
 #ratelimiting options
 #number of commands which can be ran in timeframe
-rlimit_cmd = 2
+rlimit_cmd = 1
 #timeframe (seconds)
 rlimit_time = 480
 #time since last sucessful tweet from user/server (seconds)
@@ -62,7 +62,7 @@ extractor = URLExtract()
 pf = ProfanityFilter()
 pf_extended = ProfanityFilter(extra_censor_list=["@", "kill", "essay"])
 
-user_blacklist = open("Config/Blacklist/twitter.txt", "r")
+user_blacklist = open("/root/TenshiBot/Config/Blacklist/twitter.txt", "r")
 badactors = user_blacklist.read()
 
 acc_age = datetime.now() - timedelta(days=dayspassed)
@@ -102,36 +102,36 @@ class twitterCog(commands.Cog):
         asciitext = strip_non_ascii(args)
         asciiusername = strip_non_ascii(ctx.author.name)
         if asciitext == '':
-            await ctx.send('Error: Tweet contains no alphanumeric characters')
+            await ctx.send('Tweet contains no alphanumeric characters')
         #check username for profanity
         if pf.is_profane(asciiusername) == True:
             await ctx.send('You need to change your Discord username to use this command')
             return
         #link check
         if extractor.has_urls(asciitext):
-            await ctx.send('Error: URL is unsupported')
+            await ctx.send("Links are unsupported")
             return
         if "@" in asciitext:
-            await ctx.send('Error: Invalid tweet')
+            await ctx.send("Tagging people isn't supported")
             return
         if "#" in asciitext:
-            await ctx.send('Error: Hashtags are not supported at this time')
+            await ctx.send('Hashtags are not supported at this time')
             return
         #prevent people from bypassing cooldown
-        if int(ctx.guild.member_count) < int("5"):
-            await ctx.send('The Twitter command cannot be used in this server')
-            return
+        #if int(ctx.guild.member_count) < int("5"):
+            #await ctx.send('The Twitter command cannot be used in this server')
+            #return
         #1cc detection 
         #if int(ctx.guild.id) == int("162861213309599744"):
             #await ctx.send('Error: Please use 1CCBot here')
             #return
         #blacklist check
         if str(ctx.author.id) in badactors:
-            await ctx.send('You have been blacklisted from using this command')
+            await ctx.send('You cannot use this command')
             return
         #account age check
         if ctx.author.created_at > acc_age:
-            await ctx.send('Your Discord account is too new')
+            await ctx.send('Your Discord account is too new to use this command')
             return
         #Tenshi join check
         #if ctx.me.joined_at > tenko_join:
@@ -141,6 +141,11 @@ class twitterCog(commands.Cog):
         if ctx.author.joined_at > user_join:
             await ctx.send("You have not been in this server long enough to use this command\nWait at least " + str(userjoin) + " days")
             return
+        #birdsong channel detection 
+        if int(ctx.channel.id) != int("577204106796466187"):
+            #await ctx.send('no')
+            return
+
         #Janky AF phrase blacklisting until i can figure out ProfanityFilter extended mode
         
         #seems to trigger some other twitter bots
