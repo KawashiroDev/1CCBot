@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.6.4'
+bot_version = '1.6.5'
 
 #owner id
 ownerid = 166189271244472320
@@ -76,7 +76,7 @@ print('Please wait warmly...')
 #change process title
 setproctitle.setproctitle('1CCBot')
 
-#initial_extensions = ['Modules.image', 'Modules.booru']
+initial_extensions = ['Modules.twitter']
 client = discord.Client()
 
 intents = discord.Intents.default()
@@ -105,9 +105,9 @@ tinfoil = user_tinfoil.read()
 user_blacklist_main = open("txt/badactors_m.txt", "r")
 badactors_m = user_blacklist_main.read()
 
-#if __name__ == '__main__':
-#    for extension in initial_extensions:
-#        bot.load_extension(extension)
+if __name__ == '__main__':
+    for extension in initial_extensions:
+        bot.load_extension(extension)
 
 def strip_non_ascii(string):
     ''' Returns the string without non ASCII characters'''
