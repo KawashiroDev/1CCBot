@@ -1,13 +1,15 @@
-1CCBot - Commandlist
+1CCBot Help
+
+Global commands
 
 Blech - send a <:cirBlech:415143187762511872>
 About - Bot information
 Kickme - Self explanatory
 Help - View this
-
-Jconfig - Download latest Jconfig
-Spicetools - Download latest Spicetools
-Spicetools_src - Download spicetools src
+Spicetools - Download Spicetools
 Bemanitools - Download latest Bemanitools
-Teknoparrot - Download latest Teknoparrot
-xrpcv - Download xrpcv from HT (likely outdated)
+
+Channel specific commands
+
+<#577204106796466187>
+Sendtweet - Post a tweet
