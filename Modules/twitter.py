@@ -24,6 +24,9 @@ tenkojoin = 7
 #How many days since user joined the server
 userjoin = 5
 
+#windows dir check
+win_dir_check = '/windows'
+
 import discord
 import aiohttp
 #import praw
@@ -62,8 +65,13 @@ extractor = URLExtract()
 pf = ProfanityFilter()
 pf_extended = ProfanityFilter(extra_censor_list=["@", "kill", "essay"])
 
-user_blacklist = open("/root/TenshiBot/Config/Blacklist/twitter.txt", "r")
-badactors = user_blacklist.read()
+if (os.path.isdir(win_dir_check)) == True:
+    user_blacklist = open("C:/Users/99710/Documents/GitHub/TenshiBot/Config/Blacklist/twitter.txt", "r")
+    badactors = user_blacklist.read()
+
+if (os.path.isdir(win_dir_check)) == False:    
+    user_blacklist = open("/root/TenshiBot/Config/Blacklist/twitter.txt", "r")
+    badactors = user_blacklist.read()
 
 acc_age = datetime.now() - timedelta(days=dayspassed)
 tenko_join = datetime.now() - timedelta(days=tenkojoin)
@@ -101,6 +109,10 @@ class twitterCog(commands.Cog):
         #convert text to ascii
         asciitext = strip_non_ascii(args)
         asciiusername = strip_non_ascii(ctx.author.name)
+        #birdsong channel detection 
+        if int(ctx.channel.id) != int("577204106796466187"):
+            #await ctx.send('no')
+            return
         if asciitext == '':
             await ctx.send('Tweet contains no alphanumeric characters')
         #check username for profanity
@@ -109,13 +121,19 @@ class twitterCog(commands.Cog):
             return
         #link check
         if extractor.has_urls(asciitext):
-            await ctx.send("Links are unsupported")
+            await ctx.send("<:cirNo:393180404204699649> No links")
             return
         if "@" in asciitext:
-            await ctx.send("Tagging people isn't supported")
+            await ctx.send("<:cirNo:393180404204699649> No @'s")
             return
         if "#" in asciitext:
-            await ctx.send('Hashtags are not supported at this time')
+            await ctx.send('<:cirNo:393180404204699649> No hashtags')
+            return
+        if "biden" in asciitext:
+            await ctx.send('<:cirNo:393180404204699649> No politics')
+            return
+        if "goverment" in asciitext:
+            await ctx.send('<:cirNo:393180404204699649> No politics')
             return
         #prevent people from bypassing cooldown
         #if int(ctx.guild.member_count) < int("5"):
@@ -141,19 +159,19 @@ class twitterCog(commands.Cog):
         if ctx.author.joined_at > user_join:
             await ctx.send("You have not been in this server long enough to use this command\nWait at least " + str(userjoin) + " days")
             return
-        #birdsong channel detection 
-        if int(ctx.channel.id) != int("577204106796466187"):
-            #await ctx.send('no')
+        #dendy detection 
+        if int(ctx.author.id) == int("222050477389512704"):
+            await ctx.send('<:cirNo:393180404204699649> No unvaccinated people')
             return
 
         #Janky AF phrase blacklisting until i can figure out ProfanityFilter extended mode
         
         #seems to trigger some other twitter bots
         if "essay" in asciitext.lower():
-            await ctx.send('Error: Invalid tweet')
+            await ctx.send('<:cirNo:393180404204699649>')
             return
         if "memphis" in asciitext.lower():
-            await ctx.send('Error: Invalid tweet')
+            await ctx.send('<:cirNo:393180404204699649>')
             return
 
         else:
