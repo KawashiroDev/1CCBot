@@ -135,6 +135,9 @@ class twitterCog(commands.Cog):
         if "goverment" in asciitext:
             await ctx.send('<:cirNo:393180404204699649> No politics')
             return
+        if "tiananmen" in asciitext.lower():
+            await ctx.send('<:cirNo:393180404204699649>')
+            return
         #prevent people from bypassing cooldown
         #if int(ctx.guild.member_count) < int("5"):
             #await ctx.send('The Twitter command cannot be used in this server')
