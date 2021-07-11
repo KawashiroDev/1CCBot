@@ -30,6 +30,16 @@ asphURL = "http://example.com"
 #April fools mode
 aprilfools=False
 
+#Account age options for links application
+#How many days old the account needs to be 
+dayspassed = 30
+
+#How many days since Tenshi was added to the server
+tenkojoin = 7
+
+#How many days since user joined the server
+userjoin = 30
+
 import discord
 import requests
 import aiohttp
@@ -70,6 +80,11 @@ Roles_special = [
 "peach",
 "silver",
 ]
+
+
+acc_age = datetime.now() - timedelta(days=dayspassed)
+tenko_join = datetime.now() - timedelta(days=tenkojoin)
+user_join = datetime.now() - timedelta(days=userjoin)
 
 print('Please wait warmly...')
 
@@ -249,8 +264,7 @@ async def on_message(message):
 
         if len(message.content) < 7:
             await message.channel.send(name + ", Your introduction is too short")
-            return
-        
+            return 
         
         #print('[debug] User has new guy role, giving a role')
         user=message.author
@@ -289,6 +303,22 @@ async def on_message(message):
         #print(user.id)
             await message.author.kick(reason='user had "kickme" role')
 
+  
+#links application
+    trusted = discord.utils.get(message.guild.roles, name="Trusted")
+    user=message.author
+    if str(message.channel) == "apply-for-links":
+            #account age check
+        if ctx.author.created_at > acc_age:
+            await ctx.send('<@' + ctx.author.id + '>' + 'Your Discord account is too new\n(Account created: ' + str(ctx.author.created_at) + ')')
+            return
+        
+        if ctx.author.joined_at > user_join:
+            await ctx.send('<@' + ctx.author.id + '>' + "You have not been in this server long enough\n(Joined server at: " + str(ctx.author.joined_at) + ")")
+            return
+
+        await user.add_roles(trusted, reason='Links access')
+        
         
     
     if str(message.author.id) in badactors and "hdd" in contents.lower():
@@ -909,6 +939,9 @@ async def about(ctx):
 
 @bot.command()
 async def rate(ctx):
+    if int(ctx.channel.id) != int("240170132104675328") or int(ctx.channel.id) != int("334817042207342593"):
+        await ctx.send("Go to <#240170132104675328>/<#334817042207342593>")
+        return
     await ctx.send("I rate it " + str(randint(0,10)) + "/10")
 
 @bot.command()
