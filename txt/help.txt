@@ -13,3 +13,6 @@ Channel specific commands
 
 <#577204106796466187>
 Sendtweet - Post a tweet
+
+<#577204106796466187>/<#334817042207342593>
+Rate - Rate something
