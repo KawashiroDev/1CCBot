@@ -940,8 +940,8 @@ async def about(ctx):
 
 @bot.command()
 async def rate(ctx):
-    if int(ctx.channel.id) != int("240170132104675328") or int(ctx.channel.id) != int("334817042207342593"):
-        await ctx.send("Go to <#240170132104675328>/<#334817042207342593>")
+    if int(ctx.channel.id) != int("240170132104675328"):
+        await ctx.send("Go to <#240170132104675328>")
         return
     await ctx.send("I rate it " + str(randint(0,10)) + "/10")
 
