@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.6.5'
+bot_version = '1.6.5 R1'
 
 #owner id
 ownerid = 166189271244472320
@@ -32,7 +32,7 @@ aprilfools=False
 
 #Account age options for links application
 #How many days old the account needs to be 
-dayspassed = 30
+dayspassed = 5
 
 #How many days since Tenshi was added to the server
 tenkojoin = 7
@@ -175,13 +175,19 @@ async def on_member_update(before, after):
     if lockednick in after.roles:
         await after.edit(nick = None, reason = "NoNickname role")
         return
-    if crappynick == True:
-        await after.edit(nick = "\U0001F4A9")
-    if crappynick2 == True:
-        await after.edit(nick = None)
     if crappyname == True:
         newname = (name.replace('!', ''))
         await after.edit(nick = newname)
+        return
+    if crappynick == True:
+        await after.edit(nick = "\U0001F4A9")
+        return
+    if crappynick2 == True:
+        await after.edit(nick = None)
+        return
+    if "konami" in nickname.lower():
+        await after.edit(nick = "\U0001F4A9")
+        return
     else:
         return
 
@@ -264,7 +270,12 @@ async def on_message(message):
 
         if len(message.content) < 7:
             await message.channel.send(name + ", Your introduction is too short")
-            return 
+            return
+
+        if message.author.created_at > acc_age:
+            #await ctx.send('<@' + message.author.id + '>' + 'Your Discord account is too new, Wait for a role\n(Account created: ' + str(message.author.created_at) + ')')
+            return
+
         
         #print('[debug] User has new guy role, giving a role')
         user=message.author
