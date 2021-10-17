@@ -377,9 +377,16 @@ async def on_message(message):
         return
 
     if "hdd dump crack" in contents.lower():   
-        #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
-        await message.channel.send("<@" + str(message.author.id) +">" + '** No**', file=discord.File('pics/brazil.png'))
-        return
+        #check if it's in CN channel
+            if str(message.channel) == '中文':
+                await message.channel.send("<@" + str(message.author.id) +">" + ' <:cirblech:415143187762511872> 社会信用已被扣除', file=discord.File('pics/socialcredit.jpg'))
+                return
+
+            else:
+                
+            
+                await message.channel.send("<@" + str(message.author.id) +">" + '** No**', file=discord.File('pics/brazil.png'))
+                return
 
 #    if "generic hdd" in contents.lower():   
 #        await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
