@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.6.5 R1'
+bot_version = '1.6.5 R2'
 
 #owner id
 ownerid = 166189271244472320
@@ -184,9 +184,6 @@ async def on_member_update(before, after):
         return
     if crappynick2 == True:
         await after.edit(nick = None)
-        return
-    if "konami" in nickname.lower():
-        await after.edit(nick = "\U0001F4A9")
         return
     else:
         return
