@@ -137,6 +137,8 @@ class twitterCog(commands.Cog):
             return
         if "tiananmen" in asciitext.lower():
             await ctx.send('<:cirNo:393180404204699649>')
+        if "(dot)" in asciitext.lower():
+            await ctx.send('<:cirNo:393180404204699649> No bypassing the filter')
             return
         #prevent people from bypassing cooldown
         #if int(ctx.guild.member_count) < int("5"):
