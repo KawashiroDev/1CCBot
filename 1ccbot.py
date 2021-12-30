@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.6.5'
+bot_version = '1.6.5 R2'
 
 #owner id
 ownerid = 166189271244472320
@@ -16,7 +16,7 @@ debugmode = False
 spiceURL = "http://onlyone.cab/downloads/spicetools-latest.zip"
 
 #Spicetools URL
-spiceURL2 = "https://cdn.discordapp.com/attachments/382177207851941889/847878541677035530/spicetools-21-05-29.zip"
+spiceURL2 = "https://discord.com/channels/162861213309599744/163093849420333056/911967104897540136"
 
 #Bemanitools URL
 btoolURL = "http://tools.bemaniso.ws/"
@@ -32,7 +32,7 @@ aprilfools=False
 
 #Account age options for links application
 #How many days old the account needs to be 
-dayspassed = 30
+dayspassed = 5
 
 #How many days since Tenshi was added to the server
 tenkojoin = 7
@@ -175,13 +175,16 @@ async def on_member_update(before, after):
     if lockednick in after.roles:
         await after.edit(nick = None, reason = "NoNickname role")
         return
-    if crappynick == True:
-        await after.edit(nick = "\U0001F4A9")
-    if crappynick2 == True:
-        await after.edit(nick = None)
     if crappyname == True:
         newname = (name.replace('!', ''))
         await after.edit(nick = newname)
+        return
+    if crappynick == True:
+        await after.edit(nick = "\U0001F4A9")
+        return
+    if crappynick2 == True:
+        await after.edit(nick = None)
+        return
     else:
         return
 
@@ -264,7 +267,12 @@ async def on_message(message):
 
         if len(message.content) < 7:
             await message.channel.send(name + ", Your introduction is too short")
-            return 
+            return
+
+        if message.author.created_at > acc_age:
+            #await ctx.send('<@' + message.author.id + '>' + 'Your Discord account is too new, Wait for a role\n(Account created: ' + str(message.author.created_at) + ')')
+            return
+
         
         #print('[debug] User has new guy role, giving a role')
         user=message.author
@@ -308,13 +316,14 @@ async def on_message(message):
     trusted = discord.utils.get(message.guild.roles, name="Trusted")
     user=message.author
     if str(message.channel) == "apply-for-links":
+        #print("A")
             #account age check
-        if ctx.author.created_at > acc_age:
-            await ctx.send('<@' + ctx.author.id + '>' + 'Your Discord account is too new\n(Account created: ' + str(ctx.author.created_at) + ')')
+        if message.author.created_at > acc_age:
+            await ctx.send('<@' + message.author.id + '>' + 'Your Discord account is too new\n(Account created: ' + str(message.author.created_at) + ')')
             return
         
-        if ctx.author.joined_at > user_join:
-            await ctx.send('<@' + ctx.author.id + '>' + "You have not been in this server long enough\n(Joined server at: " + str(ctx.author.joined_at) + ")")
+        if message.author.joined_at > user_join:
+            await ctx.send('<@' + message.author.id + '>' + "You have not been in this server long enough\n(Joined server at: " + str(message.author.joined_at) + ")")
             return
 
         await user.add_roles(trusted, reason='Links access')
@@ -365,9 +374,16 @@ async def on_message(message):
         return
 
     if "hdd dump crack" in contents.lower():   
-        #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
-        await message.channel.send("<@" + str(message.author.id) +">" + '** No**', file=discord.File('pics/brazil.png'))
-        return
+        #check if it's in CN channel
+            if str(message.channel) == '中文':
+                await message.channel.send("<@" + str(message.author.id) +">" + ' <:cirblech:415143187762511872> 社会信用已被扣除', file=discord.File('pics/socialcredit.jpg'))
+                return
+
+            else:
+                
+            
+                await message.channel.send("<@" + str(message.author.id) +">" + '** No**', file=discord.File('pics/brazil.png'))
+                return
 
 #    if "generic hdd" in contents.lower():   
 #        await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
@@ -939,8 +955,8 @@ async def about(ctx):
 
 @bot.command()
 async def rate(ctx):
-    if int(ctx.channel.id) != int("240170132104675328") or int(ctx.channel.id) != int("334817042207342593"):
-        await ctx.send("Go to <#240170132104675328>/<#334817042207342593>")
+    if int(ctx.channel.id) != int("240170132104675328"):
+        await ctx.send("Go to <#240170132104675328>")
         return
     await ctx.send("I rate it " + str(randint(0,10)) + "/10")
 

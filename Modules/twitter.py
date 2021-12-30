@@ -137,6 +137,8 @@ class twitterCog(commands.Cog):
             return
         if "tiananmen" in asciitext.lower():
             await ctx.send('<:cirNo:393180404204699649>')
+        if "(dot)" in asciitext.lower():
+            await ctx.send('<:cirNo:393180404204699649> No bypassing the filter')
             return
         #prevent people from bypassing cooldown
         #if int(ctx.guild.member_count) < int("5"):
@@ -163,9 +165,9 @@ class twitterCog(commands.Cog):
             await ctx.send("You have not been in this server long enough to use this command\nWait at least " + str(userjoin) + " days")
             return
         #dendy detection 
-        if int(ctx.author.id) == int("222050477389512704"):
-            await ctx.send('<:cirNo:393180404204699649> No unvaccinated people')
-            return
+        #if int(ctx.author.id) == int("222050477389512704"):
+            #await ctx.send('<:cirNo:393180404204699649> No unvaccinated people')
+            #return
 
         #Janky AF phrase blacklisting until i can figure out ProfanityFilter extended mode
         
