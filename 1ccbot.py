@@ -308,13 +308,14 @@ async def on_message(message):
     trusted = discord.utils.get(message.guild.roles, name="Trusted")
     user=message.author
     if str(message.channel) == "apply-for-links":
+        #print("A")
             #account age check
-        if ctx.author.created_at > acc_age:
-            await ctx.send('<@' + ctx.author.id + '>' + 'Your Discord account is too new\n(Account created: ' + str(ctx.author.created_at) + ')')
+        if message.author.created_at > acc_age:
+            await ctx.send('<@' + message.author.id + '>' + 'Your Discord account is too new\n(Account created: ' + str(ctx.author.created_at) + ')')
             return
         
-        if ctx.author.joined_at > user_join:
-            await ctx.send('<@' + ctx.author.id + '>' + "You have not been in this server long enough\n(Joined server at: " + str(ctx.author.joined_at) + ")")
+        if message.author.joined_at > user_join:
+            await ctx.send('<@' + message.author.id + '>' + "You have not been in this server long enough\n(Joined server at: " + str(ctx.author.joined_at) + ")")
             return
 
         await user.add_roles(trusted, reason='Links access')
