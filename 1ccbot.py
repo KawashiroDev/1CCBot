@@ -983,5 +983,5 @@ async def dsay(ctx, *, args):
 tkn = open("Tokens/tenshi_production.txt", "r")
 token = tkn.read()
 tkn.close()    
-bot.run(token, bot=True, reconnect=True)
+bot.run(token, reconnect=True)
 
