@@ -57,6 +57,8 @@ from discord.ext import commands
 from random import randint
 from datetime import datetime, timedelta, date
 from zipfile import ZipFile
+from urlextract import URLExtract
+from profanityfilter import ProfanityFilter
 
 Roles = [
 "green",     
@@ -81,6 +83,10 @@ Roles_special = [
 "silver",
 ]
 
+#url extractor stuff
+extractor = URLExtract()
+
+pf = ProfanityFilter()
 
 acc_age = datetime.now() - timedelta(days=dayspassed)
 tenko_join = datetime.now() - timedelta(days=tenkojoin)
@@ -249,6 +255,7 @@ async def on_message(message):
     if role in message.author.roles and str(message.channel) == "introductions":
 
         name = message.author.name
+        asciitext = strip_non_ascii(contents)
     
         if "test jconfig" in contents.lower():
             return
@@ -264,10 +271,20 @@ async def on_message(message):
 
         if "streancommunuty" in contents.lower():
             await message.author.ban(reason='Autoban: fake URL trade scam)', delete_message_days=1)
+            return
 
         if len(message.content) < 7:
             await message.channel.send(name + ", Your introduction is too short")
             return
+
+        if extractor.has_urls(asciitext):
+            await message.channel.send(name + ", Ask a moderator for a role")
+            return
+
+        if pf.is_profane(asciitext) == True:
+            await message.channel.send(name + ", Introduce yourself properly!")
+            return
+
 
         if message.author.created_at > acc_age:
             #await ctx.send('<@' + message.author.id + '>' + 'Your Discord account is too new, Wait for a role\n(Account created: ' + str(message.author.created_at) + ')')
