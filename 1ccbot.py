@@ -16,7 +16,7 @@ debugmode = False
 spiceURL = "http://onlyone.cab/downloads/spicetools-latest.zip"
 
 #Spicetools URL
-spiceURL2 = "https://discord.com/channels/162861213309599744/163093849420333056/911967104897540136"
+spiceURL2 = "https://bemani.fun/spicetools/spicetools-latest.zip"
 
 #Bemanitools URL
 btoolURL = "http://tools.bemaniso.ws/"
