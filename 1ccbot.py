@@ -286,9 +286,9 @@ async def on_message(message):
             return
 
 
-        if message.author.created_at > acc_age:
+        #if message.author.created_at > acc_age:
             #await ctx.send('<@' + message.author.id + '>' + 'Your Discord account is too new, Wait for a role\n(Account created: ' + str(message.author.created_at) + ')')
-            return
+            #return
 
         
         #print('[debug] User has new guy role, giving a role')
@@ -355,8 +355,14 @@ async def on_message(message):
     if str(message.author.id) in badactors_m:
         return
 
+
     if "h0nde" in contents.lower() and str(message.author.id) == "155149108183695360":
         await message.delete()
+        return
+
+    #dendy antivax crap
+    if "the jab doesn't work" in contents.lower() and str(message.author.id) == "222050477389512704":
+        await message.channel.send('https://www.cdc.gov/coronavirus/2019-ncov/vaccines/effectiveness/why-measure-effectiveness/breakthrough-cases.html\n `"However, since vaccines are not 100% effective at preventing infection, some people who are fully vaccinated will still get COVID-19."`')
         return
     
 #game hdd/ssd checks
