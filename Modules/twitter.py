@@ -37,6 +37,7 @@ import twitter
 import datetime
 import base64
 import os
+import pytz
 
 
 from discord.ext import commands
@@ -73,9 +74,11 @@ if (os.path.isdir(win_dir_check)) == False:
     user_blacklist = open("/root/TenshiBot/Config/Blacklist/twitter.txt", "r")
     badactors = user_blacklist.read()
 
-acc_age = datetime.now() - timedelta(days=dayspassed)
-tenko_join = datetime.now() - timedelta(days=tenkojoin)
-user_join = datetime.now() - timedelta(days=userjoin)
+utc=pytz.UTC
+
+acc_age = utc.localize(datetime.now()) - timedelta(days=dayspassed)
+tenko_join = utc.localize(datetime.now()) - timedelta(days=tenkojoin)
+user_join = utc.localize(datetime.now()) - timedelta(days=userjoin)
 
 #owner check
 #19/05 U+1F382
