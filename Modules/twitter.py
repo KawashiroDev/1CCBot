@@ -184,7 +184,7 @@ class twitterCog(commands.Cog):
 
         else:
             em = discord.Embed(title='Are you sure you want to tweet this?', description = asciitext, colour=0x6aeb7b)
-            em.set_author(name='Twitter for 1CCBot' , icon_url=self.bot.user.avatar_url)
+            em.set_author(name='Twitter for 1CCBot' , icon_url=self.bot.user.avatar)
             #em.set_footer(text="Follow me @HinanawiBot")
             tweetconfirm = await ctx.send(embed=em)
             #tweetconfirm = await ctx.send('Are you sure you want to tweet this?')
