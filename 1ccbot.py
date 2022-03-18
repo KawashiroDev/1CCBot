@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.6.5 R2'
+bot_version = '1.6.6'
 
 #owner id
 ownerid = 166189271244472320
@@ -969,7 +969,7 @@ async def about(ctx):
     buildinfo="%s" % time.ctime(os.path.getmtime("1ccbot.py"))
 
     em=discord.Embed(colour=0xff0000)
-    em.set_author(name= bot.user.name + ' info', icon_url=bot.user.avatar_url)
+    em.set_author(name= bot.user.name + ' info', icon_url=self.bot.user.avatar)
     em.add_field(name="Version", value=bot_version, inline=False)
     em.add_field(name="Uptime", value=uptime, inline=False)
     em.add_field(name="1ccbot.py timestamp", value=buildinfo, inline=False)
