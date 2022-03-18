@@ -361,7 +361,7 @@ async def on_message(message):
         return
 
     #dendy antivax crap
-    if "the jab doesn't work" in contents.lower() and str(message.author.id) == "222050477389512704":
+    if "the jab doesn't work" in contents.lower() and str(message.author.id) == "252442396879486976":
         await message.channel.send('https://www.cdc.gov/coronavirus/2019-ncov/vaccines/effectiveness/why-measure-effectiveness/breakthrough-cases.html\n `"However, since vaccines are not 100% effective at preventing infection, some people who are fully vaccinated will still get COVID-19."`')
         return
     
