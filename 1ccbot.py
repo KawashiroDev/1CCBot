@@ -228,10 +228,10 @@ async def on_message(message):
     contents = message.content
     hdd = open("txt/hddtext.txt", "r")
     hddtext = hdd.read()
-    #if message.author == bot.user:
-        #return
-    #if message.author.bot:
-        #return
+    if message.author == bot.user:
+        return
+    if message.author.bot:
+        return
     if "https://bemaniso.ws/freeinvite.php" in contents.lower():
         await message.channel.send("^Bait")
         return
