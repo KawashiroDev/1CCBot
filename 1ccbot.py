@@ -368,8 +368,13 @@ async def on_message(message):
 #game hdd/ssd checks
     if "iidx hdd" in contents.lower():  
         #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
-        await message.channel.send(file=discord.File("pics/hdd/" + random.choice(os.listdir("pics/hdd"))))
-        return
+        if modrole in message.author.roles:
+            await message.channel.send("<@" + str(message.author.id) +">", file=discord.File('pics/wig2.png'))
+            return
+
+        else:
+            await message.channel.send(file=discord.File("pics/hdd/" + random.choice(os.listdir("pics/hdd"))))
+            return
 
     if "sdvx hdd" in contents.lower(): 
         #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
@@ -401,6 +406,12 @@ async def on_message(message):
             if str(message.channel) == '中文':
                 await message.channel.send("<@" + str(message.author.id) +">" + ' <:cirblech:415143187762511872> 社会信用已被扣除', file=discord.File('pics/socialcredit.jpg'))
                 return
+
+            if modrole in message.author.roles:
+                await message.channel.send("<@" + str(message.author.id) +">", file=discord.File('pics/wig2.png'))
+                return
+
+
 
             else:
                 
