@@ -228,6 +228,8 @@ async def on_message(message):
     contents = message.content
     hdd = open("txt/hddtext.txt", "r")
     hddtext = hdd.read()
+    history = (await message.guild.get_channel(message.channel.id).history(limit=50).flatten())
+    
     if message.author == bot.user:
         return
     if message.author.bot:
@@ -256,6 +258,8 @@ async def on_message(message):
 
         name = message.author.name
         asciitext = strip_non_ascii(contents)
+        nr = open("txt/nointro.txt", "r")
+        norole = nr.read()
     
         if "test jconfig" in contents.lower():
             return
@@ -283,6 +287,10 @@ async def on_message(message):
 
         if pf.is_profane(asciitext) == True:
             await message.channel.send(name + ", Introduce yourself properly!")
+            return
+
+        if str(message.author.id) in norole:
+            #await message.channel.send(name + ", Ask a moderator for a role")
             return
 
 
@@ -327,6 +335,7 @@ async def on_message(message):
         #user=message.author
         #print(user.id)
             await message.author.kick(reason='user had "kickme" role')
+            return
 
   
 #links application
@@ -344,6 +353,7 @@ async def on_message(message):
             return
 
         await user.add_roles(trusted, reason='Links access')
+        return
         
         
     
@@ -371,6 +381,10 @@ async def on_message(message):
         if modrole in message.author.roles:
             await message.channel.send("<@" + str(message.author.id) +">", file=discord.File('pics/wig2.png'))
             return
+                
+        if str(message.guild.me.id) in str(history):
+            await message.channel.purge(limit=1)
+            return
 
         else:
             await message.channel.send(file=discord.File("pics/hdd/" + random.choice(os.listdir("pics/hdd"))))
@@ -382,7 +396,7 @@ async def on_message(message):
 
     if "iidx ssd" in contents.lower():  
         #await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'SSD' is")
-        await message.channel.send(file=discord.File("pics/hdd/" + random.choice(os.listdir("pics/hdd"))))
+        #await message.channel.send(file=discord.File("pics/hdd/" + random.choice(os.listdir("pics/hdd"))))
         return
 
     if "sdvx ssd" in contents.lower(): 
@@ -411,13 +425,15 @@ async def on_message(message):
                 await message.channel.send("<@" + str(message.author.id) +">", file=discord.File('pics/wig2.png'))
                 return
 
-
-
             else:
+
+                if str(message.guild.me.id) in str(history):
+                    await message.channel.purge(limit=1)
+                    return
                 
-            
-                await message.channel.send("<@" + str(message.author.id) +">" + '** No**', file=discord.File('pics/brazil.png'))
-                return
+                else:
+                    await message.channel.send("<@" + str(message.author.id) +">" + '** No**', file=discord.File('pics/brazil.png'))
+                    return
 
 #    if "generic hdd" in contents.lower():   
 #        await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
