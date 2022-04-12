@@ -104,6 +104,7 @@ intents = discord.Intents.default()
 intents.typing = False
 intents.presences = True
 intents.members = True
+#intents.message_content = True
 
 if debugmode == True:
     bot = commands.Bot(command_prefix=("1c."), case_insensitive=True)
@@ -191,6 +192,8 @@ async def on_member_update(before, after):
     if crappynick2 == True:
         await after.edit(nick = None)
         return
+    if "1ccbot" in nickname.lower():
+        await after.edit(nick = "\U0001F4A9")
     else:
         return
 
@@ -215,6 +218,9 @@ async def on_member_join(member):
     if str(member.id) in permaban:
         await member.ban(reason='permaban')
         return
+    #if str(member.id) == "116275390695079945":
+        #await member.kick()
+        #return
 
     print(member.name)
     if "h0nde" in member.name.lower():
@@ -228,7 +234,7 @@ async def on_message(message):
     contents = message.content
     hdd = open("txt/hddtext.txt", "r")
     hddtext = hdd.read()
-    history = (await message.guild.get_channel(message.channel.id).history(limit=50).flatten())
+    history = (await message.guild.get_channel(message.channel.id).history(limit=20).flatten())
     
     if message.author == bot.user:
         return
@@ -383,7 +389,12 @@ async def on_message(message):
             return
                 
         if str(message.guild.me.id) in str(history):
-            await message.channel.purge(limit=1)
+            #await message.channel.purge(limit=1)
+            #print ("iidx hdd")
+            await message.add_reaction('\U0001F1E7')
+            await message.add_reaction('\U0001F1F7')
+            await message.add_reaction('\U0001F1FA')
+            await message.add_reaction('\U0001F1ED')
             return
 
         else:
@@ -428,13 +439,17 @@ async def on_message(message):
             else:
 
                 if str(message.guild.me.id) in str(history):
-                    await message.channel.purge(limit=1)
+                    #await message.channel.purge(limit=1)
+                    await message.add_reaction('\U0001F1E7')
+                    await message.add_reaction('\U0001F1F7')
+                    await message.add_reaction('\U0001F1FA')
+                    await message.add_reaction('\U0001F1ED')
                     return
                 
                 else:
                     await message.channel.send("<@" + str(message.author.id) +">" + '** No**', file=discord.File('pics/brazil.png'))
                     return
-
+                
 #    if "generic hdd" in contents.lower():   
 #        await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
 #        return
@@ -996,7 +1011,7 @@ async def about(ctx):
     buildinfo="%s" % time.ctime(os.path.getmtime("1ccbot.py"))
 
     em=discord.Embed(colour=0xff0000)
-    em.set_author(name= bot.user.name + ' info', icon_url=self.bot.user.avatar)
+    em.set_author(name= bot.user.name + ' info')
     em.add_field(name="Version", value=bot_version, inline=False)
     em.add_field(name="Uptime", value=uptime, inline=False)
     em.add_field(name="1ccbot.py timestamp", value=buildinfo, inline=False)
