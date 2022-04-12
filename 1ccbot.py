@@ -234,7 +234,7 @@ async def on_message(message):
     contents = message.content
     hdd = open("txt/hddtext.txt", "r")
     hddtext = hdd.read()
-    history = (await message.guild.get_channel(message.channel.id).history(limit=20).flatten())
+    history = (await message.guild.get_channel(message.channel.id).history(limit=10).flatten())
     
     if message.author == bot.user:
         return
