@@ -118,6 +118,7 @@ class twitterCog(commands.Cog):
             return
         if asciitext == '':
             await ctx.send('Tweet contains no alphanumeric characters')
+            return
         #check username for profanity
         if pf.is_profane(asciiusername) == True:
             await ctx.send('You need to change your Discord username to use this command')
@@ -140,6 +141,7 @@ class twitterCog(commands.Cog):
             return
         if "tiananmen" in asciitext.lower():
             await ctx.send('<:cirNo:393180404204699649>')
+            return
         if "(dot)" in asciitext.lower():
             await ctx.send('<:cirNo:393180404204699649> No bypassing the filter')
             return
