@@ -22,7 +22,7 @@ dayspassed = 30
 tenkojoin = 7
 
 #How many days since user joined the server
-userjoin = 5
+userjoin = 2
 
 #windows dir check
 win_dir_check = '/windows'
@@ -167,7 +167,7 @@ class twitterCog(commands.Cog):
             #return
         #user join check
         if ctx.author.joined_at > user_join:
-            await ctx.send("You have not been in this server long enough to use this command\nWait at least " + str(userjoin) + " days")
+            await ctx.send("You have not been in this server long enough to use this command")
             return
         #dendy detection 
         #if int(ctx.author.id) == int("222050477389512704"):
