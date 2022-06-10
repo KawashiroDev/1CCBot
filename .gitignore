@@ -15,3 +15,4 @@ Tokens/twitter_access_secret.txt
 Tokens/twitter_consumer.txt
 Tokens/twitter_consumer_secret.txt
 *.pyc
+txt/nointro.txt
