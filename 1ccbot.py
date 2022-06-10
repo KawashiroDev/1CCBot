@@ -104,7 +104,7 @@ intents = discord.Intents.default()
 intents.typing = False
 intents.presences = True
 intents.members = True
-#intents.message_content = True
+intents.message_content = True
 
 if debugmode == True:
     bot = commands.Bot(command_prefix=("1c."), case_insensitive=True)
