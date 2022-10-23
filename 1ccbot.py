@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.6.6'
+bot_version = '1.6.7 R3'
 
 #owner id
 ownerid = 166189271244472320
@@ -16,7 +16,7 @@ debugmode = False
 spiceURL = "http://onlyone.cab/downloads/spicetools-latest.zip"
 
 #Spicetools URL
-spiceURL2 = "https://bemani.fun/spicetools/spicetools-latest.zip"
+spiceURL2 = "https://github.com/spicetools/spicetools/releases/"
 
 #Bemanitools URL
 btoolURL = "http://tools.bemaniso.ws/"
@@ -61,18 +61,18 @@ from urlextract import URLExtract
 from profanityfilter import ProfanityFilter
 
 Roles = [
-"green",     
-"light green",    
-"dark green",
-"purple",
-"magenta",
-"pensi blue",
-"pink",
-"cyan",
-"gold",
-"yellow",
-"orange",
-"red",
+"Ꮐrееn",     
+"ӏight Ꮐrееn",    
+"‌ԁаrk Ꮐrееn",
+"Ꮲυrplе",
+"ⅿɑɡentɑ",
+"р﻿е﻿n﻿ѕ﻿і﻿ ʙluе",
+"ріnk",
+"ⅽγαɴ",
+"g﻿о﻿l﻿d",
+"у﻿е﻿l﻿l﻿о﻿w",
+"Օrä﻿n﻿ɡ﻿е",
+"r﻿е﻿d",
 ]
 
 Roles_special = [
@@ -81,6 +81,17 @@ Roles_special = [
 "neon pink",
 "peach",
 "silver",
+]
+
+spicetools_response = [
+"Funny human",     
+"Am i a joke to you?",    
+"Bruh",
+"Can someone kick the wannabe 1CCBot?",
+"Shush",
+"You do not spark joy",
+"Who is this guy?",
+"Silence, human",
 ]
 
 #url extractor stuff
@@ -126,6 +137,9 @@ tinfoil = user_tinfoil.read()
 
 user_blacklist_main = open("txt/badactors_m.txt", "r")
 badactors_m = user_blacklist_main.read()
+
+badfiles = open("txt/badfiles.txt", "r")
+badfilenames = badfiles.read()
 
 if __name__ == '__main__':
     for extension in initial_extensions:
@@ -174,6 +188,9 @@ async def on_member_update(before, after):
     
     crappynick = nickname.startswith('!')
     crappynick2 = nickname.startswith('(')
+    crappynick3 = nickname.startswith('"')
+    crappynick4 = nickname.startswith('#')
+    crappynick5 = nickname.startswith("'")
     
     name = str(after.name)
     crappyname = name.startswith('!')
@@ -192,6 +209,18 @@ async def on_member_update(before, after):
     if crappynick2 == True:
         await after.edit(nick = None)
         return
+    if crappynick3 == True:
+        newnick = (nickname.replace('"', ''))
+        await after.edit(nick = newnick)
+        return
+    if crappynick4 == True:
+        newnick = (nickname.replace('#', ''))
+        await after.edit(nick = newnick)
+        return
+    if crappynick5 == True:
+        newnick = (nickname.replace("'", ''))
+        await after.edit(nick = newnick)
+        return
     if "1ccbot" in nickname.lower():
         await after.edit(nick = "\U0001F4A9")
     else:
@@ -203,7 +232,7 @@ async def on_guild_update(before, after):
     await asyncio.sleep(3)
     image = "Avatars/" + random.choice(os.listdir("Avatars"))
     newavatar = open(image, 'rb')
-    await after.edit(name="/1CC/ - Arcade and Doujin", icon = newavatar.read(), default_notifications = mentions)
+    #await after.edit(name="/1CC/ - Arcade and Doujin", icon = newavatar.read(), default_notifications = mentions)
     return
 
 #@bot.event
@@ -218,9 +247,6 @@ async def on_member_join(member):
     if str(member.id) in permaban:
         await member.ban(reason='permaban')
         return
-    #if str(member.id) == "116275390695079945":
-        #await member.kick()
-        #return
 
     print(member.name)
     if "h0nde" in member.name.lower():
@@ -255,6 +281,20 @@ async def on_message(message):
     if "onlyfans" in contents.lower() and str(message.channel) == "invites":
         await message.delete()
         return
+
+    if ", spicetools can be downloaded from https://elpis.fun/spicetools/spicetools-latest.zip" in contents.lower():
+        if str(message.guild.me.id) in str(history):
+            #await message.channel.purge(limit=1)
+            #print ("iidx hdd")
+            await message.add_reaction('\U0001F99C')
+            return
+
+        else:
+            await message.channel.trigger_typing()
+            await asyncio.sleep(1.7)
+            await message.channel.send(secure_random.choice(spicetools_response))
+            return
+        
 
 #role giving thingy, Removes the new guy role from a new user and assigns them a new role at random when they send a message
     role = discord.utils.get(message.guild.roles, name="new guy")
@@ -342,6 +382,31 @@ async def on_message(message):
         #print(user.id)
             await message.author.kick(reason='user had "kickme" role')
             return
+
+    role = discord.utils.get(message.guild.roles, name="Nogifs")
+    if role in message.author.roles and message.attachments:
+        print(message.attachments)
+        if ".gif" in str(message.attachments):
+            await message.delete()
+            return
+
+    role = discord.utils.get(message.guild.roles, name="Noimages")
+    if role in message.author.roles and message.attachments:
+        await message.delete()
+        return
+
+    role = discord.utils.get(message.guild.roles, name="Noimages")
+    if role in message.author.roles and ".jpg" in message.content:
+        await message.delete()
+
+    role = discord.utils.get(message.guild.roles, name="Noimages")
+    if role in message.author.roles and ".png" in message.content:
+        await message.delete()
+
+    role = discord.utils.get(message.guild.roles, name="Noimages")
+    if role in message.author.roles and ".gif" in message.content:
+        await message.delete()    
+        
 
   
 #links application
