@@ -16,3 +16,4 @@ Tokens/twitter_consumer.txt
 Tokens/twitter_consumer_secret.txt
 *.pyc
 txt/nointro.txt
+txt/badfiles.txt
