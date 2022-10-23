@@ -512,7 +512,7 @@ async def on_message(message):
                     return
                 
                 else:
-                    await message.channel.send("<@" + str(message.author.id) +">" + '** No**', file=discord.File('pics/brazil.png'))
+                    await message.channel.send("<@" + str(message.author.id) +">" + '**You wot m8?**', file=discord.File('pics/london.png'))
                     return
                 
 #    if "generic hdd" in contents.lower():   
