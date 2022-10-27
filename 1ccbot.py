@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.6.7 R3'
+bot_version = '1.6.7 R4'
 
 #owner id
 ownerid = 166189271244472320
@@ -494,7 +494,8 @@ async def on_message(message):
     if "hdd dump crack" in contents.lower():   
         #check if it's in CN channel
             if str(message.channel) == '中文':
-                await message.channel.send("<@" + str(message.author.id) +">" + ' <:cirblech:415143187762511872> 社会信用已被扣除', file=discord.File('pics/socialcredit.jpg'))
+                #await message.channel.send("<@" + str(message.author.id) +">" + ' <:cirblech:415143187762511872> 社会信用已被扣除', file=discord.File('pics/socialcredit.jpg'))
+                await message.channel.send("<@" + str(message.author.id) +">" + ' <:pepedamn:859589341319004200> 您的社会信用余额为 0', file=discord.File('pics/socialcredit3.png'))
                 return
 
             if modrole in message.author.roles:
