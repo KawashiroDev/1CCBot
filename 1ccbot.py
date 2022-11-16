@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.6.7 R4'
+bot_version = '1.6.7 R5'
 
 #owner id
 ownerid = 166189271244472320
@@ -16,7 +16,7 @@ debugmode = False
 spiceURL = "http://onlyone.cab/downloads/spicetools-latest.zip"
 
 #Spicetools URL
-spiceURL2 = "https://github.com/spicetools/spicetools/releases/"
+spiceURL2 = "https://bemani.fun/spicetools/spicetools-latest.zip"
 
 #Bemanitools URL
 btoolURL = "http://tools.bemaniso.ws/"
@@ -92,6 +92,14 @@ spicetools_response = [
 "You do not spark joy",
 "Who is this guy?",
 "Silence, human",
+]
+
+_1984_response_generic = [
+"Literally 2022",    
+"Still better than this year",
+"1CC members when they get automodded for the 69th time:",
+"LiTeRaLlY 1984",
+
 ]
 
 #url extractor stuff
@@ -232,7 +240,9 @@ async def on_guild_update(before, after):
     await asyncio.sleep(3)
     image = "Avatars/" + random.choice(os.listdir("Avatars"))
     newavatar = open(image, 'rb')
-    #await after.edit(name="/1CC/ - Arcade and Doujin", icon = newavatar.read(), default_notifications = mentions)
+    banner = "Banners/" + random.choice(os.listdir("Banners"))
+    newbanner = open(banner, 'rb')
+    await after.edit(name="/1CC/ - Arcade and Doujin", icon = newavatar.read(), banner = newbanner.read(), default_notifications = mentions)
     return
 
 #@bot.event
@@ -260,7 +270,7 @@ async def on_message(message):
     contents = message.content
     hdd = open("txt/hddtext.txt", "r")
     hddtext = hdd.read()
-    history = (await message.guild.get_channel(message.channel.id).history(limit=10).flatten())
+    history = (await message.guild.get_channel(message.channel.id).history(limit=5).flatten())
     
     if message.author == bot.user:
         return
@@ -273,6 +283,10 @@ async def on_message(message):
     if "http://bemaniso.ws/freeinvite.php" in contents.lower():
         await message.channel.send("^Bait")
         return
+
+    if "<http://bemaniso.ws/freeinvite.php>" in contents.lower():
+        await message.channel.send("^Bait")
+        return
     
     if "ligma" in contents.lower() and str(message.channel) == "invites":
         await message.delete()
@@ -282,7 +296,7 @@ async def on_message(message):
         await message.delete()
         return
 
-    if ", spicetools can be downloaded from https://elpis.fun/spicetools/spicetools-latest.zip" in contents.lower():
+    if ", spicetools can be downloaded from " in contents.lower():
         if str(message.guild.me.id) in str(history):
             #await message.channel.purge(limit=1)
             #print ("iidx hdd")
@@ -298,6 +312,7 @@ async def on_message(message):
 
 #role giving thingy, Removes the new guy role from a new user and assigns them a new role at random when they send a message
     role = discord.utils.get(message.guild.roles, name="new guy")
+    badrole = discord.utils.get(message.guild.roles, name="role")
     nointro = discord.utils.get(message.guild.roles, name="NoIntroductions")
     user=message.author
     if role in message.author.roles and str(message.channel) == "introductions":
@@ -332,8 +347,13 @@ async def on_message(message):
             return
 
         if pf.is_profane(asciitext) == True:
-            await message.channel.send(name + ", Introduce yourself properly!")
-            return
+            if badrole in message.author.roles:
+                await message.author.kick(reason="Can't read")
+                return
+            else:
+                await message.channel.send(name + ", Introduce yourself properly!")
+                await user.add_roles(badrole, reason='idk')
+                return
 
         if str(message.author.id) in norole:
             #await message.channel.send(name + ", Ask a moderator for a role")
@@ -513,8 +533,44 @@ async def on_message(message):
                     return
                 
                 else:
-                    await message.channel.send("<@" + str(message.author.id) +">" + '**You wot m8?**', file=discord.File('pics/london.png'))
+                    await message.channel.send("<@" + str(message.author.id) +">" + '**Would you like some lead with that dump crack? **', file=discord.File('pics/detroit.png'))
                     return
+
+    if "literally 1984" in contents.lower():
+        noimages = discord.utils.get(message.guild.roles, name="Noimages")
+        nogifs = discord.utils.get(message.guild.roles, name="Nogifs")
+        _1984 = discord.utils.get(message.guild.roles, name="1984")
+
+        if modrole in message.author.roles:
+            return
+
+        if str(message.guild.me.id) in str(history):
+            return
+                
+        if noimages in message.author.roles:
+            await message.channel.trigger_typing()
+            await asyncio.sleep(1.1)
+            await message.channel.send("<@" + str(message.author.id) +">" + " I'm very sorry that the direct and predictable results of your actions happened to you")
+            return
+
+        if nogifs in message.author.roles:
+            await message.channel.trigger_typing()
+            await asyncio.sleep(1.1)
+            await message.channel.send("<@" + str(message.author.id) +">" + " I'm very sorry that the direct and predictable results of your actions happened to you")
+            return
+        
+        if _1984 in message.author.roles:
+            await message.channel.trigger_typing()
+            await asyncio.sleep(1.1)
+            await message.channel.send("<@" + str(message.author.id) +">" + " I'm very sorry that the direct and predictable results of your actions happened to you")
+            return
+
+        else:
+            await message.channel.trigger_typing()
+            await asyncio.sleep(1.1)
+            await message.channel.send(secure_random.choice(_1984_response_generic))
+            return
+            
                 
 #    if "generic hdd" in contents.lower():   
 #        await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
