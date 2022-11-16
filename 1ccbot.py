@@ -271,6 +271,7 @@ async def on_message(message):
     hdd = open("txt/hddtext.txt", "r")
     hddtext = hdd.read()
     history = (await message.guild.get_channel(message.channel.id).history(limit=5).flatten())
+    history_hdd = (await message.guild.get_channel(message.channel.id).history(limit=10).flatten())
     
     if message.author == bot.user:
         return
@@ -473,7 +474,7 @@ async def on_message(message):
             await message.channel.send("<@" + str(message.author.id) +">", file=discord.File('pics/wig2.png'))
             return
                 
-        if str(message.guild.me.id) in str(history):
+        if str(message.guild.me.id) in str(history_hdd):
             #await message.channel.purge(limit=1)
             #print ("iidx hdd")
             await message.add_reaction('\U0001F1E7')
@@ -515,7 +516,7 @@ async def on_message(message):
         #check if it's in CN channel
             if str(message.channel) == '中文':
                 #await message.channel.send("<@" + str(message.author.id) +">" + ' <:cirblech:415143187762511872> 社会信用已被扣除', file=discord.File('pics/socialcredit.jpg'))
-                await message.channel.send("<@" + str(message.author.id) +">" + ' <:pepedamn:859589341319004200> 您的社会信用余额为 0', file=discord.File('pics/socialcredit3.png'))
+                await message.channel.send("<@" + str(message.author.id) +">" + ' <:cirComfy:393180740608589834> 你已经获得了社会信用', file=discord.File('pics/socialcredit2.jpg'))
                 return
 
             if modrole in message.author.roles:
@@ -524,16 +525,23 @@ async def on_message(message):
 
             else:
 
-                if str(message.guild.me.id) in str(history):
+                if str(message.guild.me.id) in str(history_hdd):
                     #await message.channel.purge(limit=1)
-                    await message.add_reaction('\U0001F1E7')
-                    await message.add_reaction('\U0001F1F7')
-                    await message.add_reaction('\U0001F1FA')
-                    await message.add_reaction('\U0001F1ED')
+
+                    #bruh
+                    #await message.add_reaction('\U0001F1E7')
+                    #await message.add_reaction('\U0001F1F7')
+                    #await message.add_reaction('\U0001F1FA')
+                    #await message.add_reaction('\U0001F1ED')
+
+                    #no
+                    await message.add_reaction('\U0001F1F3')
+                    await message.add_reaction('\U0001F1F4')
+                    
                     return
                 
                 else:
-                    await message.channel.send("<@" + str(message.author.id) +">" + '**Would you like some lead with that dump crack? **', file=discord.File('pics/detroit.png'))
+                    await message.channel.send("<@" + str(message.author.id) +">" + " You've Yeed Your Last Haw", file=discord.File('pics/texas.png'))
                     return
 
     if "literally 1984" in contents.lower():
