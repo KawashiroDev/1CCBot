@@ -519,7 +519,8 @@ async def on_message(message):
         #check if it's in CN channel
             if str(message.channel) == '中文':
                 #await message.channel.send("<@" + str(message.author.id) +">" + ' <:cirblech:415143187762511872> 社会信用已被扣除', file=discord.File('pics/socialcredit.jpg'))
-                await message.channel.send("<@" + str(message.author.id) +">" + ' <:cirComfy:393180740608589834> 你已经获得了社会信用', file=discord.File('pics/socialcredit2.jpg'))
+                #await message.channel.send("<@" + str(message.author.id) +">" + ' <:cirComfy:393180740608589834> 你已经获得了社会信用', file=discord.File('pics/socialcredit2.jpg'))
+                await message.channel.send("<@" + str(message.author.id) +">" + ' 那不是德州的方式', file=discord.File('pics/texas.png'))
                 return
 
             if modrole in message.author.roles:
@@ -544,7 +545,7 @@ async def on_message(message):
                     return
                 
                 else:
-                    await message.channel.send("<@" + str(message.author.id) +">" + " You've Yeed Your Last Haw", file=discord.File('pics/texas.png'))
+                    await message.channel.send("<@" + str(message.author.id) +">" + " You have lost all your Social Credits", file=discord.File('pics/socialcredit3_eng.png'))
                     return
 
     if "literally 1984" in contents.lower():
