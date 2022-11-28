@@ -406,8 +406,11 @@ async def on_message(message):
 
     role = discord.utils.get(message.guild.roles, name="Nogifs")
     if role in message.author.roles and message.attachments:
-        print(message.attachments)
+        #print(message.attachments)
         if ".gif" in str(message.attachments):
+            await message.delete()
+            return
+        if ".gif" in message.content:
             await message.delete()
             return
 
