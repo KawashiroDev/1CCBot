@@ -545,7 +545,7 @@ async def on_message(message):
                     return
                 
                 else:
-                    await message.channel.send("<@" + str(message.author.id) +">" + " You have lost all your Social Credits", file=discord.File('pics/socialcredit3_eng.png'))
+                    await message.channel.send("<@" + str(message.author.id) +">" + " You have lost all your Amercian Social Credits", file=discord.File('pics/us_socialcredit.png'))
                     return
 
     if "literally 1984" in contents.lower():
@@ -622,6 +622,13 @@ async def help(ctx):
     await ctx.send(help_cmd)
 
 #misc commands
+
+@bot.command()
+@is_owner()
+async def ateveryone(ctx):
+    await ctx.message.delete()
+    await ctx.send('@everyone')
+
 
 @bot.command()
 async def restart(ctx):
