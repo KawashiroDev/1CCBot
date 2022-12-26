@@ -199,6 +199,9 @@ async def on_member_update(before, after):
     crappynick3 = nickname.startswith('"')
     crappynick4 = nickname.startswith('#')
     crappynick5 = nickname.startswith("'")
+    crappynick6 = nickname.startswith("-")
+    crappynick7 = nickname.startswith(".")
+    crappynick8 = nickname.startswith("*")
     
     name = str(after.name)
     crappyname = name.startswith('!')
@@ -212,21 +215,36 @@ async def on_member_update(before, after):
         await after.edit(nick = newname)
         return
     if crappynick == True:
-        await after.edit(nick = "\U0001F4A9")
+        newnick = (nickname.replace('!', '឵!'))
+        await after.edit(nick = newnick)
+        #await after.edit(nick = "\U0001F4A9")
         return
     if crappynick2 == True:
-        await after.edit(nick = None)
+        newnick = (nickname.replace('(', '឵('))
+        await after.edit(nick = newnick)
         return
     if crappynick3 == True:
-        newnick = (nickname.replace('"', ''))
+        newnick = (nickname.replace('"', '឵"'))
         await after.edit(nick = newnick)
         return
     if crappynick4 == True:
-        newnick = (nickname.replace('#', ''))
+        newnick = (nickname.replace('#', '឵#'))
         await after.edit(nick = newnick)
         return
     if crappynick5 == True:
-        newnick = (nickname.replace("'", ''))
+        newnick = (nickname.replace("'", "឵'"))
+        await after.edit(nick = newnick)
+        return
+    if crappynick6 == True:
+        newnick = (nickname.replace("-", "឵-"))
+        await after.edit(nick = newnick)
+        return
+    if crappynick7 == True:
+        newnick = (nickname.replace(".", "឵."))
+        await after.edit(nick = newnick)
+        return
+    if crappynick8 == True:
+        newnick = (nickname.replace("*", "឵*"))
         await after.edit(nick = newnick)
         return
     if "1ccbot" in nickname.lower():
@@ -587,6 +605,41 @@ async def on_message(message):
 #    if "generic hdd" in contents.lower():   
 #        await message.channel.send("<@" + str(message.author.id) +">" + " Please google what a 'HDD' is")
 #        return
+
+
+#@everyone links autodetect
+    #check if channel is links
+    if str(message.channel) == "links":
+        print(message.content)
+        #check if user is a mod
+        if modrole in message.author.roles:
+            print("modrole")
+            #check if user has typed @everyone
+            if "<@&1049091051647926312>" in message.content:
+                ateveryone = contents.replace("<@&1049091051647926312>", "@everyone")
+                
+                #ping everyone
+                await message.channel.send(ateveryone)
+                await message.delete()
+                return
+
+#@everyone links autodetect
+    #check if channel is links
+    if str(message.channel) == "news":
+        print(message.content)
+        #check if user is a mod
+        if modrole in message.author.roles:
+            print("modrole")
+            #check if user has typed @everyone
+            if "<@&1049091051647926312>" in message.content:
+                ateveryone = contents.replace("<@&1049091051647926312>", "@everyone")
+                
+                #ping everyone
+                await message.channel.send(ateveryone)
+                await message.delete()
+                return
+            
+        
     
     await bot.process_commands(message)
 
