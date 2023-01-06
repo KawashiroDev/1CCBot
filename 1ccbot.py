@@ -306,6 +306,18 @@ async def on_message(message):
     if "<http://bemaniso.ws/freeinvite.php>" in contents.lower():
         await message.channel.send("^Bait")
         return
+
+    if "<https://bemaniso.ws/freeinvite.php>" in contents.lower():
+        await message.channel.send("^Bait")
+        return
+
+    if "<http://www.bemaniso.ws/freeinvite.php>" in contents.lower():
+        await message.channel.send("^Bait")
+        return
+
+    if "<https://www.bemaniso.ws/freeinvite.php>" in contents.lower():
+        await message.channel.send("^Bait")
+        return
     
     if "ligma" in contents.lower() and str(message.channel) == "invites":
         await message.delete()
