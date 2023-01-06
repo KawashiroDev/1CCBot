@@ -17,3 +17,5 @@ Tokens/twitter_consumer_secret.txt
 *.pyc
 txt/nointro.txt
 txt/badfiles.txt
+Tokens/gelbooru_api.txt
+Tokens/gelbooru_userid.txt
