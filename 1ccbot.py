@@ -4,7 +4,7 @@
 ##Parameters##
 
 #Version
-bot_version = '1.6.7 R5'
+bot_version = '1.6.8'
 
 #owner id
 ownerid = 166189271244472320
@@ -16,7 +16,7 @@ debugmode = False
 spiceURL = "http://onlyone.cab/downloads/spicetools-latest.zip"
 
 #Spicetools URL
-spiceURL2 = "https://bemani.fun/spicetools/spicetools-latest.zip"
+spiceURL2 = "https://spice2x.github.io/"
 
 #Bemanitools URL
 btoolURL = "http://tools.bemaniso.ws/"
@@ -52,6 +52,8 @@ import zipfile
 import shutil
 import hashlib
 import setproctitle
+import lxml
+import base64
 
 from discord.ext import commands
 from random import randint
@@ -59,6 +61,13 @@ from datetime import datetime, timedelta, date
 from zipfile import ZipFile
 from urlextract import URLExtract
 from profanityfilter import ProfanityFilter
+from bs4 import BeautifulSoup
+
+#Gelbooru API keys
+gbooru_api = open("Tokens/gelbooru_api.txt", "r")
+g_api = gbooru_api.read()
+gbooru_user = open("Tokens/gelbooru_userid.txt", "r")
+g_user = gbooru_user.read()
 
 Roles = [
 "Ꮐrееn",     
@@ -95,10 +104,21 @@ spicetools_response = [
 ]
 
 _1984_response_generic = [
-"Literally 2022",    
+"Literally 2023",    
 "Still better than this year",
 "1CC members when they get automodded for the 69th time:",
 "LiTeRaLlY 1984",
+"https://cdn.discordapp.com/attachments/273459263471484928/1062320840550658078/image.png",
+
+]
+
+atrfate_quote = [
+"Play better games",    
+"lifes way of telling you to play better games",
+"it says download and play better games",
+"play better games best option",
+"its gods way of saying play better games",
+
 
 ]
 
@@ -1152,7 +1172,7 @@ async def bemanitools(ctx):
 
 @bot.command()
 async def jconfig(ctx):
-    await ctx.send('Jconfig can be downloaded from <#434222178922135553>. Be sure to read the readme')
+    await ctx.send('Jconfig can be downloaded from wherever. Be sure to read the readme')
 
 #owner commands
 @bot.command()
@@ -1236,6 +1256,25 @@ async def md(ctx, arg):
     await ctx.send("`" + arg + "`")
 
 @bot.command()
+async def encode(ctx, arg):
+    trusted = discord.utils.get(ctx.guild.roles, name="trusted")
+    message = arg
+    message_bytes = message.encode('ascii')
+    base64_message = base64.b64encode(message_bytes)
+    b64string = base64_message.decode("ascii")
+    #print(base64_message)
+    if str(ctx.channel) == 'links':
+        if trusted in ctx.author.roles:
+            await ctx.send(b64string)
+            await ctx.message.delete()
+        else:
+            await ctx.send("This command can only be used by trusted people")
+            return
+    else:
+        await ctx.send("This command can only be used in links channel")
+        return
+
+@bot.command()
 async def emote(ctx, arg):
     await ctx.send("<" + arg + ">")
 
@@ -1249,6 +1288,100 @@ async def say(ctx, *, args):
 async def dsay(ctx, *, args):
     await ctx.send(args)
     await ctx.message.delete()
+
+@bot.slash_command(name="givemesocialcredits", description="这个命令是做什么的")
+@commands.cooldown(1, 5, commands.BucketType.default)
+async def socialcredit_slash(ctx):
+    await ctx.respond("You have gained social credits", file=discord.File("pics/socialcredit2.jpg" ))
+
+@bot.slash_command(name="atrfate_quote", description="Quotes from the #1 rhythm game fan")
+@commands.cooldown(1, 10, commands.BucketType.default)
+async def atrfatequote_slash(ctx):
+    await ctx.respond(file=discord.File("pics/atrquote/" + random.choice(os.listdir("pics/atrquote"))))
+
+@bot.slash_command(name="arcade_image", description="Get an arcade related image")
+@commands.cooldown(1, 90, commands.BucketType.default)
+async def arcadeimg_slash(ctx):
+
+    async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(verify_ssl=False)) as session:
+        async with session.get('http://' + "gelbooru.com" + '/index.php?page=dapi&s=post&q=index&api_key=' + g_api + '&user_id=' + g_user + '&tags=rating:general+-animated+arcade') as r:
+            if r.status == 200:
+                soup = BeautifulSoup(await r.text(), "lxml")
+                num = int(soup.find('posts')['count'])
+                #print ('[Debug] num = ' + str(num))
+                maxpage = int(round(num/100))
+                #print ('[Debug] maxpage = ' + str(maxpage))
+                page = random.randint(0, maxpage)
+                #print ('[Debug] page = ' + str(page))
+                t = soup.find('posts')
+                p = t.find_all('post')
+                if num == 0: 
+                    #msg = "**No posts found, Try:**\nChecking the tags are spelt correctly\nChanging your search query\nSearching with the Gelbooru command"
+                    #await ctx.respond(msg)
+                    return
+
+                else:
+                    source = ((soup.find('post'))('source'))
+                    if num < 100:
+                        pic = p[random.randint(0,num-1)]
+                    elif page == maxpage:
+                        pic = p[random.randint(0,99)]
+                    else:
+                        pic = p[random.randint(0,99)]
+                    img_url = pic('file_url')
+                    url_strip_start = str(img_url).strip('[<file_url>')
+                    raw_url = str(url_strip_start).strip('</file_url>]')
+                    img_id = pic('id')
+                    id_strip_start = str(img_id).strip('[<id>')
+                    sbooru_id = str(id_strip_start).strip('</id>]')
+
+                    #sbooru_tags = pic['tags']
+                    img_sauce = pic('source')
+                    if img_sauce == '':
+                        img_sauce = '[<source>No source listed</source>]'
+                    source_strip_start = str(img_sauce).strip('[<source>')
+                    sbooru_sauce = str(source_strip_start).strip('</source>]')
+                           
+                    img_width = pic('width')
+                
+                    width_strip_start = str(img_width).strip('[<width>')
+                    width = str(width_strip_start).strip('</width>]')
+
+                    img_height = pic('height')
+                    height_strip_start = str(img_height).strip('[<height>')
+                    height = str(height_strip_start).strip('</height>]')
+                            
+                    #creator = pic['creator_id']
+                    if sbooru_sauce == '':
+                        sbooru_sauce = 'No source listed'
+                    em = discord.Embed(title='', description='', colour=0x42D4F4)
+                    em.set_author(name='Arcade image')
+                    em.set_image(url=str(raw_url))
+                    #em.add_field(name="Image Source", value=sbooru_sauce, inline=False)    
+                    em.add_field(name="Number", value=sbooru_id, inline=True)
+                    em.add_field(name="Dimensions", value=width + "x" + height, inline=True)
+                    #em.add_field(name="Query", value="`" + tags + "`", inline=False)
+                    #em.set_image(url=booruappend + msg)
+                    await ctx.respond(embed=em)
+                    return
+
+            msg = 'This command is unavailable at this time'
+            await ctx.respond(msg)
+            return
+
+
+#@bot.slash_command(name="ooc info", description="Triggering Joh any% speedrun")
+#async def oocinfo_slash(ctx):
+    #hlp = open("txt/ooc_info.txt", "r")
+    #help_cmd = hlp.read()
+    #await ctx.respond(help_cmd)
+
+#@bot.slash_command(name="bemaniso info", description="Triggering Corin any% speedrun")
+#async def bemanisoinfo_slash(ctx):
+    #hlp = open("txt/bemaniso_info.txt", "r")
+    #help_cmd = hlp.read()
+    #await ctx.respond(help_cmd)
+
 
 #tkn = open("Tokens/tenshi_debug.txt", "r")
 tkn = open("Tokens/tenshi_production.txt", "r")
