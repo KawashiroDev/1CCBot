@@ -595,7 +595,7 @@ async def on_message(message):
                     return
                 
                 else:
-                    await message.channel.send("<@" + str(message.author.id) +">" + " You have lost all your Amercian Social Credits", file=discord.File('pics/us_socialcredit.png'))
+                    await message.channel.send("<@" + str(message.author.id) +">" + " **No**", file=discord.File('pics/brazil.png'))
                     return
 
     if "literally 1984" in contents.lower():
@@ -1292,7 +1292,8 @@ async def dsay(ctx, *, args):
 @bot.slash_command(name="givemesocialcredits", description="这个命令是做什么的")
 @commands.cooldown(1, 5, commands.BucketType.default)
 async def socialcredit_slash(ctx):
-    await ctx.respond("You have gained social credits", file=discord.File("pics/socialcredit2.jpg" ))
+    #await ctx.respond("You have gained social credits", file=discord.File("pics/socialcredit2.jpg" ))
+    await ctx.respond(" ", file=discord.File("pics/no_u.png" ))
 
 @bot.slash_command(name="atrfate_quote", description="Quotes from the #1 rhythm game fan")
 @commands.cooldown(1, 10, commands.BucketType.default)
